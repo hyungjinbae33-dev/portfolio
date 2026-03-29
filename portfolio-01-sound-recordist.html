@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nikos Andreou — Location Sound Recordist</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --fg: #f0ece4;
+  --accent: #c8a456;
+  --accent2: #1a3a2a;
+  --muted: #6b6560;
+  --card-bg: #141414;
+  --border: #2a2a2a;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  overflow-x: hidden;
+}
+.waveform-bg {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0; opacity: 0.04; pointer-events: none;
+}
+.waveform-bg svg { width: 100%; height: 100%; }
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 24px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  backdrop-filter: blur(20px);
+  background: rgba(10,10,10,0.7);
+  border-bottom: 1px solid var(--border);
+}
+.logo { font-family: 'Playfair Display', serif; font-size: 22px; letter-spacing: 2px; color: var(--accent); }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s; font-weight: 500; }
+.nav-links a:hover { color: var(--accent); }
+.hero {
+  position: relative; min-height: 100vh; display: flex; align-items: center;
+  padding: 120px 48px 80px; z-index: 1;
+}
+.hero-content { max-width: 800px; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 40px;
+  opacity: 0; animation: fadeUp 0.8s ease forwards 0.3s;
+}
+.hero-tag::before { content: ''; width: 40px; height: 1px; background: var(--accent); }
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(48px, 7vw, 96px); line-height: 1.05; font-weight: 400;
+  margin-bottom: 32px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.5s;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero-desc {
+  font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 560px;
+  margin-bottom: 48px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.7s;
+}
+.hero-stats { display: flex; gap: 60px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.9s; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 42px; color: var(--accent); display: block; }
+.stat-label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.hero-visual {
+  position: absolute; right: 48px; top: 50%; transform: translateY(-50%);
+  display: flex; align-items: flex-end; gap: 6px; height: 300px;
+  opacity: 0; animation: fadeIn 1.2s ease forwards 1.1s;
+}
+.eq-bar {
+  width: 4px;
+  background: linear-gradient(to top, var(--accent), var(--accent2));
+  border-radius: 2px; animation: eqBounce 1.8s ease-in-out infinite alternate;
+}
+.eq-bar:nth-child(1) { height: 30%; animation-delay: 0s; }
+.eq-bar:nth-child(2) { height: 60%; animation-delay: 0.2s; }
+.eq-bar:nth-child(3) { height: 45%; animation-delay: 0.4s; }
+.eq-bar:nth-child(4) { height: 80%; animation-delay: 0.1s; }
+.eq-bar:nth-child(5) { height: 35%; animation-delay: 0.6s; }
+.eq-bar:nth-child(6) { height: 90%; animation-delay: 0.3s; }
+.eq-bar:nth-child(7) { height: 50%; animation-delay: 0.5s; }
+.eq-bar:nth-child(8) { height: 70%; animation-delay: 0.15s; }
+.eq-bar:nth-child(9) { height: 25%; animation-delay: 0.45s; }
+.eq-bar:nth-child(10) { height: 55%; animation-delay: 0.25s; }
+.eq-bar:nth-child(11) { height: 85%; animation-delay: 0.35s; }
+.eq-bar:nth-child(12) { height: 40%; animation-delay: 0.55s; }
+@keyframes eqBounce { 0% { transform: scaleY(1); } 100% { transform: scaleY(0.3); } }
+.section-title { font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 56px); margin-bottom: 16px; font-weight: 400; }
+.section-subtitle { font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.projects { position: relative; z-index: 1; padding: 120px 48px; }
+.projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 64px; }
+.project-card {
+  position: relative; border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden; background: var(--card-bg);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer;
+}
+.project-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 24px 80px rgba(200,164,86,0.08); }
+.project-thumb { width: 100%; height: 240px; position: relative; overflow: hidden; }
+.project-thumb-inner {
+  width: 100%; height: 100%; background-size: cover; background-position: center;
+  transition: transform 0.5s ease; position: relative;
+}
+.project-thumb-inner::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4)); }
+.project-card:hover .project-thumb-inner { transform: scale(1.05); }
+.project-info { padding: 28px; }
+.project-category { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.project-title { font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 12px; font-weight: 400; }
+.project-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.project-meta { display: flex; gap: 24px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+.project-meta span { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.project-meta span::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+.audio-section { position: relative; z-index: 1; padding: 120px 48px; background: var(--card-bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.audio-list { margin-top: 64px; display: flex; flex-direction: column; gap: 2px; }
+.audio-item { display: grid; grid-template-columns: 60px 1fr 300px 80px; align-items: center; padding: 20px 24px; border-radius: 8px; transition: all 0.3s; cursor: pointer; }
+.audio-item:hover { background: rgba(200,164,86,0.05); }
+.audio-num { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--muted); }
+.audio-track-title { font-size: 16px; font-weight: 500; margin-bottom: 4px; }
+.audio-track-sub { font-size: 13px; color: var(--muted); }
+.audio-waveform { display: flex; align-items: center; gap: 1.5px; height: 40px; min-width: 250px; }
+.wave-bar { width: 2px; border-radius: 1px; background: var(--accent); opacity: 0.7; transition: opacity 0.2s; min-height: 3px; }
+.audio-item:hover .wave-bar { opacity: 1; }
+.audio-duration { text-align: right; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.equipment { position: relative; z-index: 1; padding: 120px 48px; }
+.equipment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 64px; }
+.equip-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--card-bg); transition: all 0.4s; }
+.equip-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.equip-img { width: 100%; height: 180px; object-fit: cover; display: block; border-bottom: 1px solid var(--border); background: #1a1a1a; }
+.equip-body { padding: 24px; }
+.equip-name { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 8px; }
+.equip-detail { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.about { position: relative; z-index: 1; padding: 120px 48px; background: var(--card-bg); border-top: 1px solid var(--border); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 64px; align-items: start; }
+.about-portrait {
+  width: 100%; aspect-ratio: 3/4; border-radius: 12px;
+  overflow: hidden; border: 1px solid var(--border);
+  position: relative;
+}
+.about-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.about-portrait::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, rgba(10,10,10,0.4)); }
+.about-text p { font-size: 17px; line-height: 1.8; color: var(--muted); margin-bottom: 24px; }
+.about-text p:first-child { font-size: 22px; color: var(--fg); font-family: 'Playfair Display', serif; line-height: 1.6; }
+.about-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+.about-tag { padding: 8px 20px; border: 1px solid var(--border); border-radius: 100px; font-size: 13px; color: var(--muted); transition: all 0.3s; }
+.about-tag:hover { border-color: var(--accent); color: var(--accent); }
+.contact { position: relative; z-index: 1; padding: 120px 48px; }
+.contact-content { text-align: center; max-width: 640px; margin: 0 auto; }
+.contact-content .section-title { font-size: clamp(36px, 5vw, 64px); }
+.contact-desc { font-size: 18px; color: var(--muted); margin-top: 20px; margin-bottom: 48px; line-height: 1.7; }
+.contact-email {
+  display: inline-block; font-family: 'Playfair Display', serif; font-size: 28px;
+  color: var(--accent); text-decoration: none;
+  border-bottom: 1px solid transparent; transition: border-color 0.3s; padding-bottom: 4px;
+}
+.contact-email:hover { border-color: var(--accent); }
+.contact-socials { display: flex; justify-content: center; gap: 32px; margin-top: 48px; }
+.contact-socials a { color: var(--muted); text-decoration: none; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s; }
+.contact-socials a:hover { color: var(--accent); }
+footer { padding: 40px 48px; border-top: 1px solid var(--border); text-align: center; font-size: 13px; color: var(--muted); position: relative; z-index: 1; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; } .nav-links { display: none; }
+  .hero { padding: 100px 24px 60px; } .hero-visual { display: none; } .hero-stats { gap: 32px; }
+  .projects { padding: 80px 24px; } .projects-grid { grid-template-columns: 1fr; }
+  .audio-section { padding: 80px 24px; } .audio-item { grid-template-columns: 40px 1fr 80px; } .audio-waveform { display: none; }
+  .equipment { padding: 80px 24px; } .equipment-grid { grid-template-columns: 1fr; }
+  .about { padding: 80px 24px; } .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .contact { padding: 80px 24px; }
+}
+</style>
+</head>
+<body>
+<div class="waveform-bg">
+<svg viewBox="0 0 1440 900" preserveAspectRatio="none">
+  <path d="M0,450 Q360,350 720,450 T1440,450" stroke="#c8a456" fill="none" stroke-width="1">
+    <animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0,450 Q360,350 720,450 T1440,450;M0,450 Q360,550 720,450 T1440,450;M0,450 Q360,350 720,450 T1440,450"/>
+  </path>
+  <path d="M0,400 Q360,300 720,400 T1440,400" stroke="#c8a456" fill="none" stroke-width="0.5">
+    <animate attributeName="d" dur="6s" repeatCount="indefinite" values="M0,400 Q360,300 720,400 T1440,400;M0,400 Q360,500 720,400 T1440,400;M0,400 Q360,300 720,400 T1440,400"/>
+  </path>
+</svg>
+</div>
+<nav>
+  <div class="logo">N.A.</div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#reel">Sound Reel</a></li>
+    <li><a href="#equipment">Equipment</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Location Sound Recordist</div>
+    <h1>Capturing the <em>soul</em> of every scene</h1>
+    <p class="hero-desc">Award-winning location sound recordist based in Athens, Greece. Specializing in feature films, documentaries, and commercial productions across Europe and the Mediterranean.</p>
+    <div class="hero-stats">
+      <div><span class="stat-num">120+</span><span class="stat-label">Productions</span></div>
+      <div><span class="stat-num">15</span><span class="stat-label">Years Experience</span></div>
+      <div><span class="stat-num">8</span><span class="stat-label">Awards</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+    <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+    <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+    <div class="eq-bar"></div><div class="eq-bar"></div><div class="eq-bar"></div>
+  </div>
+</section>
+<section class="projects" id="projects">
+  <div class="section-subtitle">Selected Work</div>
+  <h2 class="section-title">Featured Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-thumb"><div class="project-thumb-inner" style="background-image:url('https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&q=80')"></div></div>
+      <div class="project-info">
+        <div class="project-category">Feature Film</div>
+        <div class="project-title">The Last Harbour</div>
+        <div class="project-desc">Location sound for a drama set in the Greek islands. Complex wind management and underwater sequences.</div>
+        <div class="project-meta"><span>Cannes Selection 2024</span><span>Director: M. Stavros</span></div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb"><div class="project-thumb-inner" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80')"></div></div>
+      <div class="project-info">
+        <div class="project-category">Documentary</div>
+        <div class="project-title">Echoes of Anatolia</div>
+        <div class="project-desc">Field recording across Turkey and Greece capturing vanishing musical traditions and ambient soundscapes.</div>
+        <div class="project-meta"><span>IDFA 2023</span><span>12 Locations</span></div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb"><div class="project-thumb-inner" style="background-image:url('https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800&q=80')"></div></div>
+      <div class="project-info">
+        <div class="project-category">Commercial</div>
+        <div class="project-title">Aegean Airlines Campaign</div>
+        <div class="project-desc">Multi-location commercial shoot across 5 Greek islands. Pristine dialogue in challenging outdoor environments.</div>
+        <div class="project-meta"><span>National Broadcast</span><span>5 Islands</span></div>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-thumb"><div class="project-thumb-inner" style="background-image:url('https://images.unsplash.com/photo-1514539079130-25950c84af65?w=800&q=80')"></div></div>
+      <div class="project-info">
+        <div class="project-category">TV Series</div>
+        <div class="project-title">Athens After Dark</div>
+        <div class="project-desc">8-episode noir series. Night shoots in Athens streets requiring stealth recording and complex radio mic setups.</div>
+        <div class="project-meta"><span>ERT Network</span><span>8 Episodes</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="audio-section" id="reel">
+  <div class="section-subtitle">Listen</div>
+  <h2 class="section-title">Sound Reel</h2>
+  <div class="audio-list">
+    <div class="audio-item"><div class="audio-num">01</div><div class="audio-title-block"><div class="audio-track-title">The Last Harbour — Dock Scene</div><div class="audio-track-sub">Feature Film • Location Sound</div></div><div class="audio-waveform" id="wave1"></div><div class="audio-duration">2:34</div></div>
+    <div class="audio-item"><div class="audio-num">02</div><div class="audio-title-block"><div class="audio-track-title">Echoes of Anatolia — Village Dawn</div><div class="audio-track-sub">Documentary • Field Recording</div></div><div class="audio-waveform" id="wave2"></div><div class="audio-duration">1:48</div></div>
+    <div class="audio-item"><div class="audio-num">03</div><div class="audio-title-block"><div class="audio-track-title">Athens After Dark — Chase Sequence</div><div class="audio-track-sub">TV Series • Location Sound</div></div><div class="audio-waveform" id="wave3"></div><div class="audio-duration">3:12</div></div>
+    <div class="audio-item"><div class="audio-num">04</div><div class="audio-title-block"><div class="audio-track-title">Aegean Campaign — Island Montage</div><div class="audio-track-sub">Commercial • Mixed Sound</div></div><div class="audio-waveform" id="wave4"></div><div class="audio-duration">1:15</div></div>
+    <div class="audio-item"><div class="audio-num">05</div><div class="audio-title-block"><div class="audio-track-title">Ambient Greece — Summer Cicadas</div><div class="audio-track-sub">Personal Project • Field Recording</div></div><div class="audio-waveform" id="wave5"></div><div class="audio-duration">4:02</div></div>
+  </div>
+</section>
+<section class="equipment" id="equipment">
+  <div class="section-subtitle">Tools of the Trade</div>
+  <h2 class="section-title">Equipment</h2>
+  <div class="equipment-grid">
+    <div class="equip-card"><img class="equip-img" src="https://images.unsplash.com/photo-1598653222000-6b7b7a552625?w=500&q=80" alt="Sound Devices 833"><div class="equip-body"><div class="equip-name">Sound Devices 833</div><div class="equip-detail">Primary mixer/recorder. 8-channel portable with 32-bit float recording.</div></div></div>
+    <div class="equip-card"><img class="equip-img" src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=500&q=80" alt="Schoeps CMIT 5U"><div class="equip-body"><div class="equip-name">Schoeps CMIT 5U</div><div class="equip-detail">Shotgun microphone. Exceptional off-axis rejection for clean dialogue.</div></div></div>
+    <div class="equip-card"><img class="equip-img" src="https://images.unsplash.com/photo-1563330232-57114bb0823c?w=500&q=80" alt="Lectrosonics SRc"><div class="equip-body"><div class="equip-name">Lectrosonics SRc</div><div class="equip-detail">Digital hybrid wireless. Rock-solid RF across European frequencies.</div></div></div>
+    <div class="equip-card"><img class="equip-img" src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=500&q=80" alt="Sennheiser HD 25"><div class="equip-body"><div class="equip-name">Sennheiser HD 25</div><div class="equip-detail">Industry standard monitoring with excellent isolation on set.</div></div></div>
+    <div class="equip-card"><img class="equip-img" src="https://images.unsplash.com/photo-1589903308904-1010c2294adc?w=500&q=80" alt="DPA 6060 Lavs"><div class="equip-body"><div class="equip-name">DPA 6060 Lavs</div><div class="equip-detail">Subminiature lavaliers. Nearly invisible with pristine quality.</div></div></div>
+    <div class="equip-card"><img class="equip-img" src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=500&q=80" alt="Rycote Cyclone"><div class="equip-body"><div class="equip-name">Rycote Cyclone</div><div class="equip-detail">Advanced windshield for Mediterranean coastal shoots.</div></div></div>
+  </div>
+</section>
+<section class="about" id="about">
+  <div class="section-subtitle">About</div>
+  <h2 class="section-title">The Person Behind<br>the Microphone</h2>
+  <div class="about-grid">
+    <div class="about-portrait"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" alt="Nikos Andreou — Sound Recordist"></div>
+    <div class="about-text">
+      <p>With over 15 years capturing sound across the Mediterranean, I bring every scene to life through meticulous audio craft.</p>
+      <p>Based in Athens, I've worked on productions spanning from intimate documentaries in remote Greek villages to large-scale international feature films. My approach combines technical precision with deep sensitivity to the sonic character of each location.</p>
+      <p>I believe great location sound is invisible — when done right, it places the audience inside the scene without them ever noticing.</p>
+      <div class="about-tags">
+        <span class="about-tag">Feature Films</span><span class="about-tag">Documentaries</span>
+        <span class="about-tag">Commercials</span><span class="about-tag">TV Series</span>
+        <span class="about-tag">Field Recording</span><span class="about-tag">Post Production</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="contact" id="contact">
+  <div class="contact-content">
+    <div class="section-subtitle">Get In Touch</div>
+    <h2 class="section-title">Let's create something<br><em style="font-family:'Playfair Display',serif;font-style:italic;color:var(--accent)">extraordinary</em></h2>
+    <p class="contact-desc">Available for productions across Europe and the Mediterranean.</p>
+    <a href="/cdn-cgi/l/email-protection#d6b8bfbdb9a596a5b9a3b8b2a4b3b5b9a4b2bfa5a2f8b1a4" class="contact-email"><span class="__cf_email__" data-cfemail="77191e1c18043704180219130512141805131e0403591005">[email&#160;protected]</span></a>
+    <div class="contact-socials"><a href="#">IMDb</a><a href="#">Vimeo</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+  </div>
+</section>
+<footer>&copy; 2026 Nikos Andreou. All rights reserved. Athens, Greece.</footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+document.querySelectorAll('.audio-waveform').forEach(c=>{
+  const n=60;
+  const envelope=[];
+  // Generate a realistic audio envelope with peaks and valleys
+  let amp=0.3;
+  for(let i=0;i<n;i++){
+    const t=i/n;
+    // Create organic-looking amplitude changes
+    amp+=((Math.random()-0.48)*0.15);
+    amp=Math.max(0.1,Math.min(1,amp));
+    // Add some periodic structure like real audio
+    const peak=amp*(0.5+0.5*Math.sin(t*Math.PI*2*3+Math.random()*2));
+    envelope.push(Math.max(0.08,peak));
+  }
+  envelope.forEach(h=>{
+    const b=document.createElement('div');
+    b.className='wave-bar';
+    b.style.height=(h*32+2)+'px';
+    c.appendChild(b);
+  });
+});
+const obs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){en.target.style.opacity='1';en.target.style.transform='translateY(0)';}});},{threshold:0.1});
+document.querySelectorAll('.project-card,.equip-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(24px)';el.style.transition='all 0.6s cubic-bezier(0.16,1,0.3,1)';obs.observe(el);});
+</script>
+</body>
+</html>
