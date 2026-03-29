@@ -585,6 +585,9 @@ const processData=[
 ];
 const scrollProc=document.querySelector('.scroll-process');
 if(scrollProc){
+// Set initial background image immediately
+document.getElementById('processBg').style.backgroundImage='url('+processData[0].img+')';
+document.getElementById('processBg').style.opacity='1';
 window.addEventListener('scroll',()=>{
 const rect=scrollProc.getBoundingClientRect();
 const h=scrollProc.offsetHeight;
