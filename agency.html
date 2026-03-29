@@ -3,698 +3,617 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FORMA — Curated Home Objects</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Apex Digital — eCommerce Growth Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f1ec;--fg:#1a1816;--accent:#8b6914;--accent-light:#c4a35a;--muted:#8a8279;--card:#fff;--dark:#1a1816;--border:#e2ddd6;--warm:#ece6db;--sage:#7a8a6e;--terracotta:#b4654a;--slate:#5a6670}
+:root{--bg:#050505;--fg:#f5f5f5;--accent:#6366f1;--accent2:#a5b4fc;--glow:rgba(99,102,241,.12);--muted:#888;--card:#111;--border:rgba(255,255,255,.06);--green:#34d399;--amber:#f59e0b;--rose:#f43f5e;--cyan:#22d3ee;--grad:linear-gradient(135deg,#6366f1,#8b5cf6,#a855f7)}
 *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
-body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--fg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--fg);overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:default}
+
+/* MOUSE GLOW */
+.mouse-glow{position:fixed;width:600px;height:600px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(99,102,241,.08),rgba(139,92,246,.04),transparent 70%);transform:translate(-50%,-50%);transition:opacity .3s;opacity:0}
+.mouse-glow.visible{opacity:1}
+
+/* CUSTOM CURSOR */
+.cursor{width:20px;height:20px;border:1.5px solid rgba(255,255,255,.5);border-radius:50%;position:fixed;pointer-events:none;z-index:10000;transition:width .3s,height .3s,border-color .3s,transform .3s;transform:translate(-50%,-50%)}
+.cursor.hover{width:50px;height:50px;border-color:var(--accent2);background:rgba(79,70,229,.08)}
+.cursor-dot{width:4px;height:4px;background:#fff;border-radius:50%;position:fixed;pointer-events:none;z-index:10001;transform:translate(-50%,-50%);transition:opacity .3s}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 48px;backdrop-filter:blur(16px);background:rgba(244,241,236,.9);border-bottom:1px solid var(--border)}
-.nav-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;height:72px}
-.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer}
-.nav-logo-mark{width:36px;height:36px;border:2px solid var(--fg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:16px;font-weight:400;color:var(--fg);letter-spacing:1px}
-.nav-logo-text{font-family:'DM Serif Display',serif;font-size:22px;color:var(--fg);letter-spacing:3px}
-.nav-links{display:flex;gap:32px;list-style:none;align-items:center}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;transition:color .3s;cursor:pointer}
-.nav-links a:hover,.nav-links a.active{color:var(--fg)}
-.page{display:none;opacity:0;transition:opacity .5s}.page.active{display:block;opacity:1}
-.fly-up,.fly-left,.fly-right,.fly-scale,.fly-down{opacity:0;transition:opacity 1s cubic-bezier(.23,1,.32,1),transform 1s cubic-bezier(.23,1,.32,1)}
-.fly-up{transform:translateY(35px)}
-.fly-left{transform:translateX(-40px)}
-.fly-right{transform:translateX(40px)}
-.fly-scale{transform:scale(.92)}
-.fly-down{transform:translateY(-30px)}
-.fly-up.shown,.fly-left.shown,.fly-right.shown,.fly-scale.shown,.fly-down.shown{opacity:1;transform:translate(0,0) scale(1)}
-.nav-icons{display:flex;gap:16px;align-items:center}
-.nav-icon{width:20px;height:20px;stroke:var(--fg);fill:none;stroke-width:1.5;cursor:pointer;transition:stroke .3s}
-.nav-icon:hover{stroke:var(--accent)}
-.cart-count{position:relative}
-.cart-count::after{content:'2';position:absolute;top:-6px;right:-8px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 48px}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;height:80px;border-bottom:1px solid var(--border)}
+.logo-text{font-size:14px;font-weight:700;letter-spacing:6px;text-transform:uppercase;color:var(--fg);cursor:pointer}
+.nav-links{display:flex;gap:36px;list-style:none;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;transition:color .3s;cursor:pointer;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--accent2);transition:width .3s}
+.nav-links a:hover{color:var(--fg)}
+.nav-links a:hover::after{width:100%}
+.nav-links a.active{color:var(--fg)}
+.nav-links a.active::after{width:100%}
+.nav-cta-link{color:var(--accent2)!important;font-weight:600!important}
 
-/* HERO - EDITORIAL SPLIT */
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;margin-top:72px}
-.hero-left{padding:80px 64px;display:flex;flex-direction:column;justify-content:center;background:var(--warm)}
-.hero-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:24px}
-.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(36px,4.5vw,64px);line-height:1.1;font-weight:400;margin-bottom:20px;letter-spacing:-.5px}
-.hero h1 em{font-style:italic;color:var(--accent)}
-.hero-desc{font-size:15px;color:var(--muted);line-height:1.7;max-width:380px;margin-bottom:36px}
-.hero-btns{display:flex;gap:12px}
-.btn-dark{background:var(--fg);color:var(--bg);padding:14px 32px;border-radius:0;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s}
-.btn-dark:hover{background:var(--accent);transform:translateY(-2px)}
-.btn-outline{border:1.5px solid var(--fg);color:var(--fg);padding:14px 32px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s}
-.btn-outline:hover{background:var(--fg);color:var(--bg)}
-.hero-right{position:relative;overflow:hidden}
-.hero-right img{width:100%;height:100%;object-fit:cover}
+/* PAGES */
+.page{display:none;opacity:0;transition:opacity .4s}.page.active{display:block;opacity:1}
 
-/* EDITORIAL TICKER */
-.ticker{padding:16px 0;border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap}
-.ticker-track{display:inline-flex;animation:tick 40s linear infinite}
-.ticker-item{font-family:'DM Serif Display',serif;font-size:14px;font-style:italic;color:var(--muted);padding:0 40px;display:flex;align-items:center;gap:16px}
-.ticker-dot{width:4px;height:4px;border-radius:50%;background:var(--accent-light)}
-@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+/* HERO - FULL SCREEN SPLIT */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:0 80px;position:relative;z-index:2}
+.hero-tag{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--accent2);margin-bottom:32px;display:flex;align-items:center;gap:10px;font-weight:600;opacity:0;animation:su .7s ease forwards .2s}
+.hero-tag-line{width:32px;height:1px;background:var(--accent2)}
+.hero h1{font-family:'Helvetica Neue',Helvetica,sans-serif;font-size:clamp(48px,5.5vw,82px);font-weight:900;line-height:.95;letter-spacing:-3px;margin-bottom:28px;opacity:0;animation:su .8s ease forwards .3s}
+.hero h1 .thin{font-weight:200}
+.hero h1 .highlight{background:linear-gradient(135deg,#818cf8,#a78bfa,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;position:relative}
+.hero-desc{font-size:16px;color:var(--muted);line-height:1.7;max-width:400px;margin-bottom:40px;opacity:0;animation:su .8s ease forwards .5s}
+.hero-cta-row{display:flex;gap:20px;align-items:center;opacity:0;animation:su .8s ease forwards .7s}
+.btn-main{background:#fff;color:#000;padding:16px 36px;border-radius:100px;font-size:13px;font-weight:700;text-decoration:none;transition:all .4s;letter-spacing:1px;text-transform:uppercase;cursor:pointer;display:inline-block}
+.btn-main:hover{background:var(--accent2);color:#fff;transform:scale(1.03);box-shadow:0 16px 48px rgba(79,70,229,.25)}
+.btn-line{color:var(--muted);font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:color .3s;cursor:pointer;display:flex;align-items:center;gap:8px}
+.btn-line:hover{color:var(--fg)}
+.hero-right{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-right img{width:100%;height:100%;object-fit:cover;opacity:.7;transition:transform 8s ease}
+.hero-right:hover img{transform:scale(1.05)}
+.hero-right-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(5,5,5,.6),rgba(5,5,5,.2))}
+.hero-scroll{position:absolute;bottom:40px;left:48px;display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);z-index:5}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--accent2),transparent);animation:scrollP 2s ease-in-out infinite}
+@keyframes scrollP{0%,100%{opacity:.3;transform:scaleY(.5)}50%{opacity:1;transform:scaleY(1)}}
 
-/* CATEGORIES - ORGANIC SHAPES */
-.categories{padding:100px 48px;max-width:1400px;margin:0 auto}
-.s-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:16px}
-.s-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,44px);font-weight:400;margin-bottom:48px;letter-spacing:-.3px}
-.cat-grid{display:grid;grid-template-columns:1.4fr .8fr .8fr;grid-template-rows:300px 300px;gap:16px}
-.cat-card{position:relative;overflow:hidden;cursor:pointer;border-radius:4px}
-.cat-card:nth-child(1){grid-row:span 2;border-radius:0 80px 0 0}
-.cat-card:nth-child(2){border-radius:0 0 0 60px}
-.cat-card:nth-child(3){border-radius:60px 0 0 0}
-.cat-card:nth-child(4){grid-column:span 2;border-radius:0 0 80px 0}
-.cat-card img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.16,1,.3,1)}
-.cat-card:hover img{transform:scale(1.06)}
-.cat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,22,.6),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:28px}
-.cat-name{font-family:'DM Serif Display',serif;font-size:24px;color:#fff;margin-bottom:4px}
-.cat-count{font-size:11px;color:rgba(255,255,255,.7);font-weight:500;letter-spacing:1px}
+/* MARQUEE */
+.marquee{padding:24px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap}
+.marquee-track{display:inline-flex;animation:marquee 30s linear infinite}
+.marquee-item{font-size:14px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.15);padding:0 48px;display:flex;align-items:center;gap:16px}
+.marquee-dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);opacity:.5}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* PRODUCTS - MASONRY STAGGER */
-.products{padding:100px 48px;background:var(--warm)}
-.products-inner{max-width:1400px;margin:0 auto}
-.products-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px}
-.filter-row{display:flex;gap:6px}
-.filter-btn{padding:8px 20px;border:1px solid var(--border);background:transparent;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:all .3s;font-family:inherit;font-weight:500}
-.filter-btn.active,.filter-btn:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;align-items:start}
-.product-card{background:var(--card);overflow:hidden;transition:all .5s;cursor:pointer;position:relative}
-.product-card:nth-child(2),.product-card:nth-child(5),.product-card:nth-child(8){margin-top:48px}
-.product-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,.06)}
-.product-img{width:100%;aspect-ratio:3/4;overflow:hidden;position:relative}
-.product-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
-.product-card:hover .product-img img{transform:scale(1.05)}
-.product-badge{position:absolute;top:12px;left:12px;padding:4px 12px;background:var(--accent);color:#fff;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
-.wishlist{position:absolute;top:12px;right:12px;width:32px;height:32px;background:rgba(255,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all .3s;border:none}
-.wishlist:hover{background:var(--accent);color:#fff}
-.product-info{padding:20px}
-.product-brand{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
-.product-name{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:8px}
-.product-price{font-size:14px;font-weight:600;color:var(--accent)}
-.product-price .old{text-decoration:line-through;color:var(--muted);font-weight:400;margin-left:6px;font-size:12px}
-.product-card.hidden{display:none}
+/* SECTIONS */
+.section{padding:120px 48px;max-width:1400px;margin:0 auto}
+.s-label{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--accent2);font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.s-label-line{width:24px;height:1px;background:var(--accent2)}
+.s-title{font-family:'Helvetica Neue',Helvetica,sans-serif;font-size:clamp(32px,4vw,56px);font-weight:800;letter-spacing:-1.5px;margin-bottom:16px;line-height:1.1}
+.s-desc{font-size:15px;color:var(--muted);line-height:1.7;max-width:480px;margin-bottom:56px}
 
-/* EDITORIAL SECTION */
-.editorial{padding:0;display:grid;grid-template-columns:1fr 1fr;min-height:500px}
-.editorial-img{overflow:hidden;position:relative}
-.editorial-img img{width:100%;height:100%;object-fit:cover}
-.editorial-text{padding:80px 64px;display:flex;flex-direction:column;justify-content:center;background:var(--dark);color:#fff}
-.editorial-text .s-label{color:var(--accent-light)}
-.editorial-text h2{font-family:'DM Serif Display',serif;font-size:36px;font-weight:400;margin-bottom:16px;line-height:1.2}
-.editorial-text p{font-size:15px;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:28px}
-.editorial-link{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:gap .3s}
-.editorial-link:hover{gap:14px}
+/* SERVICES - HORIZONTAL CARDS */
+.srv-row{display:grid;grid-template-columns:repeat(12,1fr);gap:20px;margin-top:56px}
+.srv-item{padding:40px;border:1px solid var(--border);border-radius:20px;background:rgba(255,255,255,.015);transition:all .5s;position:relative;overflow:hidden}
+.srv-item:nth-child(1){grid-column:1/8}
+.srv-item:nth-child(2){grid-column:8/13;align-self:end}
+.srv-item:nth-child(3){grid-column:1/5;align-self:start}
+.srv-item:nth-child(4){grid-column:5/13}
+.srv-item:nth-child(5){grid-column:1/7}
+.srv-item:nth-child(6){grid-column:7/13;align-self:end}
+.srv-item::before{content:'';position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(129,140,248,.15),transparent 70%);pointer-events:none;opacity:0;transition:opacity .4s;transform:translate(-50%,-50%)}
+.srv-item:hover::before{opacity:1}
+.srv-item:hover{background:rgba(255,255,255,.04);border-color:rgba(129,140,248,.2);transform:translateY(-6px);box-shadow:0 20px 60px rgba(99,102,241,.08)}
+.srv-icon-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+.srv-svg{width:28px;height:28px;color:var(--accent2);opacity:.4;flex-shrink:0}
+.srv-number{font-size:64px;font-weight:900;line-height:1;margin-bottom:20px;font-family:'Helvetica Neue',Helvetica,sans-serif;letter-spacing:-3px;opacity:.2}
+.srv-item:nth-child(1) .srv-number{background:linear-gradient(135deg,#6366f1,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.srv-item:nth-child(2) .srv-number{background:linear-gradient(135deg,#818cf8,#a5b4fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.srv-item:nth-child(3) .srv-number{background:linear-gradient(135deg,#7c3aed,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.srv-item:nth-child(4) .srv-number{background:linear-gradient(135deg,#4f46e5,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.srv-item:nth-child(5) .srv-number{background:linear-gradient(135deg,#a78bfa,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.srv-item:nth-child(6) .srv-number{background:linear-gradient(135deg,#8b5cf6,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.srv-item h3{font-size:18px;font-weight:700;margin-bottom:10px;letter-spacing:-.3px}
+.srv-item p{font-size:13px;color:var(--muted);line-height:1.7}
 
-/* FEATURES */
-.features{padding:80px 48px;max-width:1400px;margin:0 auto}
-.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
-.feat-item{text-align:center}
-.feat-icon{width:48px;height:48px;margin:0 auto 16px;border:1.5px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center}
-.feat-icon svg{width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:1.5}
-.feat-item h3{font-size:14px;font-weight:600;margin-bottom:6px;letter-spacing:.5px}
-.feat-item p{font-size:13px;color:var(--muted);line-height:1.6}
+/* WORK - ASYMMETRIC MASONRY GRID */
+.work-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:20px;margin-top:56px}
+.work-grid .case:nth-child(1){grid-row:span 2}
+.work-grid .case:nth-child(4){grid-column:span 2}
+.work-grid .case:nth-child(5){grid-row:span 2}
+.work-grid .case:nth-child(8){grid-column:span 2}
+.case{border-radius:16px;overflow:hidden;border:1px solid var(--border);background:var(--card);transition:all .6s cubic-bezier(.16,1,.3,1);cursor:pointer;position:relative}
+.case:hover{border-color:rgba(255,255,255,.12);transform:translateY(-6px)}
+.case-img{height:100%;min-height:240px;overflow:hidden;position:relative}
+.work-grid .case:nth-child(1) .case-img,.work-grid .case:nth-child(5) .case-img{min-height:500px}
+.work-grid .case:nth-child(4) .case-img,.work-grid .case:nth-child(8) .case-img{min-height:280px}
+.case-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1);filter:saturate(.85)}
+.case:hover .case-img img{transform:scale(1.06);filter:saturate(1)}
+.case-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(5,5,5,.85));display:flex;flex-direction:column;justify-content:flex-end;padding:32px;opacity:0;transition:opacity .5s}
+.case:hover .case-overlay{opacity:1}
+.case-overlay .tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent2);font-weight:600;margin-bottom:8px}
+.case-overlay h3{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+.case-overlay p{font-size:13px;color:var(--muted);margin-bottom:12px}
+.case-metrics{display:flex;gap:12px}
+.case-metric{padding:5px 12px;background:rgba(129,140,248,.1);border-radius:100px;font-size:11px;font-weight:600;color:var(--accent2);border:1px solid rgba(129,140,248,.15)}
 
-/* NEWSLETTER */
-.newsletter{padding:80px 48px;background:var(--dark);color:#fff;text-align:center}
-.newsletter h2{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;margin-bottom:12px}
-.newsletter p{color:rgba(255,255,255,.5);font-size:14px;margin-bottom:32px}
-.nl-form{display:flex;gap:0;max-width:440px;margin:0 auto}
-.nl-form input{flex:1;padding:14px 20px;border:1px solid rgba(255,255,255,.15);border-right:none;background:transparent;color:#fff;font-size:13px;font-family:inherit;outline:none}
-.nl-form input::placeholder{color:rgba(255,255,255,.3)}
-.nl-form button{padding:14px 28px;background:var(--accent-light);color:var(--dark);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:all .3s;font-family:inherit}
-.nl-form button:hover{background:#d4b76a}
+/* SERVICE DETAIL BLOCKS */
+.srv-detail{padding:0 48px;border-top:1px solid var(--border)}
+.srv-detail.alt{background:rgba(255,255,255,.015)}
+.srv-detail-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:600px}
+.srv-detail-inner.reverse{direction:rtl}
+.srv-detail-inner.reverse>*{direction:ltr}
+.srv-detail-text{padding:80px 64px 80px 0;display:flex;flex-direction:column;justify-content:center}
+.srv-detail-inner.reverse .srv-detail-text{padding:80px 0 80px 64px}
+.srv-detail-num{font-family:'Helvetica Neue',Helvetica,sans-serif;font-size:14px;font-weight:800;letter-spacing:2px;margin-bottom:16px}
+.srv-detail-text h3{font-family:'Helvetica Neue',Helvetica,sans-serif;font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-1px;margin-bottom:16px;line-height:1.15}
+.srv-detail-lead{font-size:17px;color:rgba(255,255,255,.75);line-height:1.5;margin-bottom:16px;font-weight:500}
+.srv-detail-text>p:last-of-type{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:32px}
+.srv-includes h4{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:600}
+.srv-includes-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px;margin-bottom:32px}
+.srv-includes-grid span{font-size:13px;color:rgba(255,255,255,.55);padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.srv-includes-grid span::before{content:'→';color:var(--accent2);font-size:11px}
+.srv-stat-row{display:flex;gap:32px}
+.srv-stat{display:flex;flex-direction:column}
+.srv-stat-n{font-family:'Helvetica Neue',Helvetica,sans-serif;font-size:28px;font-weight:800;color:var(--accent2);letter-spacing:-1px}
+.srv-stat-l{font-size:11px;color:var(--muted);margin-top:2px;font-weight:500}
+.srv-detail-img{overflow:hidden;position:relative}
+.srv-detail-img img{width:100%;height:100%;object-fit:cover;filter:saturate(.8);transition:all .6s}
+.srv-detail:hover .srv-detail-img img{filter:saturate(1);transform:scale(1.03)}
+
+/* SCROLL-DRIVEN PROCESS - Apple style */
+.scroll-process{position:relative}
+.scroll-process-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.scroll-process-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity 0.8s ease}
+.scroll-process-bg::after{content:'';position:absolute;inset:0;background:rgba(5,5,5,.82)}
+.scroll-process-content{position:relative;z-index:2;max-width:700px;padding:0 48px}
+.scroll-process-label{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--accent2);font-weight:600;margin-bottom:24px}
+.scroll-process-step{font-family:'Helvetica Neue',Helvetica,sans-serif;font-size:120px;font-weight:900;letter-spacing:-5px;line-height:1;margin-bottom:8px;background:linear-gradient(135deg,rgba(129,140,248,.15),rgba(139,92,246,.08));-webkit-background-clip:text;-webkit-text-fill-color:transparent;transition:all 0.6s}
+.scroll-process-title{font-family:'Helvetica Neue',Helvetica,sans-serif;font-size:clamp(36px,5vw,64px);font-weight:800;letter-spacing:-2px;margin-bottom:20px;transition:all 0.6s;line-height:1.1}
+.scroll-process-desc{font-size:17px;color:var(--muted);line-height:1.7;transition:all 0.6s;max-width:560px;margin:0 auto}
+.scroll-process-bar{width:200px;height:3px;background:rgba(255,255,255,.06);border-radius:2px;margin:40px auto 0;overflow:hidden}
+.scroll-process-fill{height:100%;background:var(--accent2);border-radius:2px;transition:width 0.4s ease;width:25%}
+.scroll-process-spacer{height:100vh}
+
+/* PROCESS FALLBACK ROW (kept for non-scroll contexts) */
+.process-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;border:1px solid var(--border)}
+.p-step{padding:48px 32px;border-right:1px solid var(--border);transition:background .4s;position:relative}
+.p-step:last-child{border-right:none}
+.p-step:hover{background:rgba(255,255,255,.02)}
+.p-step-num{font-family:'Helvetica Neue',Helvetica,sans-serif;font-size:56px;font-weight:900;color:rgba(129,140,248,.1);line-height:1;margin-bottom:24px;letter-spacing:-2px}
+.p-step h3{font-size:15px;font-weight:700;margin-bottom:10px}
+.p-step p{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* TESTIMONIALS - LARGE QUOTE */
+.testi-section{padding:120px 48px;border-top:1px solid var(--border)}
+.testi-inner{max-width:1400px;margin:0 auto;text-align:center}
+.testi-carousel{position:relative;max-width:800px;margin:56px auto 0}
+.testi-slide{display:none;opacity:0;transition:opacity .5s}
+.testi-slide.active{display:block;opacity:1}
+.testi-quote{font-family:'Helvetica Neue',Helvetica,sans-serif;font-size:clamp(24px,3vw,36px);font-weight:300;line-height:1.5;letter-spacing:-.5px;margin-bottom:32px;color:rgba(255,255,255,.85)}
+.testi-author{font-size:14px;font-weight:700;margin-bottom:4px}
+.testi-role{font-size:12px;color:var(--muted)}
+.testi-nav{display:flex;justify-content:center;align-items:center;gap:24px;margin-top:40px}
+.testi-arrow{width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--fg);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;font-size:16px}
+.testi-arrow:hover{border-color:var(--accent2);background:var(--glow);color:var(--accent2)}
+.testi-dots{display:flex;gap:8px}
+.testi-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.12);cursor:pointer;transition:all .3s}
+.testi-dot.active{background:var(--accent2);width:24px;border-radius:4px}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px}
+.price-col{padding:48px 36px;border:1px solid var(--border);background:rgba(255,255,255,.01);transition:all .4s;position:relative}
+.price-col:hover{background:rgba(255,255,255,.03)}
+.price-col.featured{background:rgba(79,70,229,.04);border-color:rgba(79,70,229,.2)}
+.price-col.featured::before{content:'RECOMMENDED';position:absolute;top:16px;right:16px;font-size:9px;letter-spacing:2px;color:var(--accent2);font-weight:700;background:var(--glow);padding:4px 10px;border-radius:4px}
+.price-tier{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:12px}
+.price-amt{font-family:'Helvetica Neue',Helvetica,sans-serif;font-size:48px;font-weight:900;letter-spacing:-2px;margin-bottom:4px}
+.price-per{font-size:12px;color:var(--muted);margin-bottom:32px}
+.price-features{list-style:none;margin-bottom:36px}
+.price-features li{padding:8px 0;font-size:13px;color:rgba(255,255,255,.5);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.price-features li::before{content:'→';color:var(--accent2);font-size:11px}
+.price-btn{display:block;text-align:center;padding:14px;border-radius:100px;font-weight:600;font-size:12px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all .3s;cursor:pointer}
+.price-btn.primary{background:#fff;color:#000}.price-btn.primary:hover{background:var(--accent2);color:#fff}
+.price-btn.secondary{border:1px solid var(--border);color:var(--fg)}.price-btn.secondary:hover{border-color:var(--accent2);background:var(--glow)}
+
+/* TEAM - STAGGERED CARDS */
+.team-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:56px;align-items:start}
+.team-member{position:relative;overflow:hidden;border-radius:14px;cursor:pointer;border:1px solid var(--border);background:var(--card);transition:all .5s}
+.team-member:nth-child(2){margin-top:48px}
+.team-member:nth-child(4){margin-top:48px}
+.team-member:hover{border-color:rgba(129,140,248,.2);transform:translateY(-6px)}
+.team-photo{aspect-ratio:3/4;overflow:hidden}
+.team-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(.8);transition:all .6s}
+.team-member:hover .team-photo img{filter:grayscale(0);transform:scale(1.05)}
+.team-text{padding:20px 20px 24px}
+.team-text h3{font-size:15px;font-weight:700;margin-bottom:3px}
+.team-text p{font-size:12px;color:var(--muted);margin-bottom:10px}
+.team-social{display:flex;gap:12px}
+.team-social a{font-size:11px;color:var(--accent2);text-decoration:none;font-weight:500;transition:color .3s;letter-spacing:.5px}
+.team-social a:hover{color:#fff}
+
+/* CONTACT */
+.contact-split{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:56px;min-height:500px}
+.contact-left{padding:64px;background:rgba(255,255,255,.02);border:1px solid var(--border);display:flex;flex-direction:column;justify-content:center}
+.contact-left h3{font-family:'Helvetica Neue',Helvetica,sans-serif;font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:16px}
+.contact-left p{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:32px}
+.contact-detail{display:flex;align-items:center;gap:12px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,.6)}
+.contact-detail svg{width:16px;height:16px;stroke:var(--accent2);fill:none;stroke-width:1.5;flex-shrink:0}
+.contact-right{padding:64px;border:1px solid var(--border);border-left:none}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:11px;font-weight:600;margin-bottom:5px;color:rgba(255,255,255,.4);letter-spacing:1px;text-transform:uppercase}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:12px 0;border:none;border-bottom:1px solid var(--border);font-size:14px;font-family:inherit;background:transparent;color:var(--fg);outline:none;transition:border-color .3s}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent2)}
+.form-group textarea{height:80px;resize:none}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.form-submit{width:100%;padding:16px;border:none;border-radius:100px;background:#fff;color:#000;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .3s;font-family:inherit;margin-top:16px}
+.form-submit:hover{background:var(--accent2);color:#fff}
+
+/* FAQ */
+.faq-list{margin-top:56px;max-width:800px}
+.faq{border-bottom:1px solid var(--border);cursor:pointer}
+.faq-q{padding:24px 0;font-size:15px;font-weight:600;display:flex;justify-content:space-between;align-items:center;transition:color .3s;letter-spacing:-.2px}
+.faq-q:hover{color:var(--accent2)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s;font-size:14px;color:var(--muted);line-height:1.7}
+.faq.open .faq-a{max-height:200px;padding:0 0 24px}
+.faq-arrow{font-size:18px;color:var(--muted);transition:all .3s}
+.faq.open .faq-arrow{transform:rotate(45deg);color:var(--accent2)}
 
 /* FOOTER */
-footer{padding:64px 48px;border-top:1px solid var(--border)}
-.footer-grid{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
-.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.footer-logo-mark{width:28px;height:28px;border:1.5px solid var(--fg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:12px}
-.footer-logo-text{font-family:'DM Serif Display',serif;font-size:18px;letter-spacing:3px}
-.footer-desc{font-size:13px;color:var(--muted);line-height:1.7}
-.ft-col h4{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-weight:600}
-.ft-col a{display:block;color:var(--fg);text-decoration:none;font-size:13px;margin-bottom:10px;transition:color .3s}
-.ft-col a:hover{color:var(--accent)}
-.footer-bottom{max-width:1400px;margin:32px auto 0;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);display:flex;justify-content:space-between}
+footer{padding:80px 48px 32px;border-top:1px solid var(--border)}
+.ft-inner{max-width:1400px;margin:0 auto}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px}
+.ft-brand{font-size:14px;font-weight:700;letter-spacing:6px;text-transform:uppercase;margin-bottom:16px}
+.ft-desc{font-size:13px;color:var(--muted);line-height:1.7}
+.ft-col h4{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-weight:600}
+.ft-col a{display:block;color:rgba(255,255,255,.45);text-decoration:none;font-size:13px;margin-bottom:10px;transition:color .3s;cursor:pointer}
+.ft-col a:hover{color:var(--accent2)}
+.ft-bot{border-top:1px solid var(--border);padding-top:24px;font-size:11px;color:rgba(255,255,255,.2);display:flex;justify-content:space-between;letter-spacing:1px}
 
-/* PRODUCT DETAIL OVERLAY */
-.pdp-overlay{position:fixed;inset:0;z-index:2000;background:var(--bg);overflow-y:auto;display:none;opacity:0;transition:opacity .4s}
-.pdp-overlay.active{opacity:1}
-.pdp-close{position:fixed;top:20px;left:48px;z-index:2100;cursor:pointer}
-.pdp-close-text{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);transition:color .3s;background:rgba(244,241,236,.85);backdrop-filter:blur(8px);padding:10px 20px;border:1px solid var(--border)}
-.pdp-close:hover .pdp-close-text{color:var(--fg)}
-.pdp-hero-full{height:85vh;position:relative;overflow:hidden}
-.pdp-hero-full img{width:100%;height:100%;object-fit:cover}
-.pdp-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(244,241,236,.95))}
-.pdp-hero-content{position:absolute;bottom:60px;left:80px;z-index:2}
-.pdp-hero-brand{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
-.pdp-hero-title{font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,64px);font-weight:400;line-height:1.05;margin-bottom:12px}
-.pdp-hero-price{font-size:22px;font-weight:600;color:var(--accent)}
-.pdp-info-section{padding:80px;max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
-.pdp-text-col{}
-.pdp-main-desc{font-family:'DM Serif Display',serif;font-size:24px;font-weight:400;line-height:1.4;margin-bottom:16px}
-.pdp-sub-desc{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:32px}
-.pdp-specs-wrap h3{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:16px}
-.pdp-actions{margin-top:32px;display:flex;gap:12px}
-.btn-add{background:var(--fg);color:var(--bg);padding:16px 36px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:all .3s;font-family:inherit}
-.btn-add:hover{background:var(--accent)}
-.btn-wish{width:52px;height:52px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;transition:all .3s}
-.btn-wish:hover{border-color:var(--accent);color:var(--accent)}
-.spec-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
-.spec-label{color:var(--muted)}
-.spec-value{font-weight:500}
-.pdp-img-col{position:sticky;top:100px}
-.pdp-img-col img{width:100%;border-radius:4px}
-.pdp-parallax-section{height:60vh;position:relative;overflow:hidden}
-.pdp-parallax-section img{width:100%;height:120%;object-fit:cover;position:absolute;top:-10%}
-.pdp-par-overlay{position:absolute;inset:0;background:rgba(26,24,22,.35)}
-.pdp-par-text{position:absolute;bottom:48px;left:80px;z-index:2;color:#fff;max-width:440px}
-.pdp-par-text h3{font-family:'DM Serif Display',serif;font-size:24px;font-weight:400;margin-bottom:8px}
-.pdp-par-text p{font-size:13px;color:rgba(255,255,255,.7);line-height:1.7}
-.pdp-details-section{padding:80px;max-width:1400px;margin:0 auto}
-.pdp-details-section h2{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;margin-bottom:48px;text-align:center}
-.detail-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;align-items:center}
-.detail-row.reverse{direction:rtl}.detail-row.reverse>*{direction:ltr}
-.detail-img{overflow:hidden;border-radius:4px;aspect-ratio:4/3}
-.detail-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
-.detail-img:hover img{transform:scale(1.04)}
-.detail-text{padding:40px}
-.detail-text h3{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
-.detail-text h4{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;margin-bottom:10px}
-.detail-text p{font-size:14px;color:var(--muted);line-height:1.8}
-
+@keyframes su{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:900px){
-nav{padding:0 24px}.nav-links{display:none}
-.hero{grid-template-columns:1fr;margin-top:72px}.hero-left{padding:60px 24px}.hero-right{height:50vh}
-.cat-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.cat-card:nth-child(1){grid-row:auto;border-radius:0}.cat-card:nth-child(4){grid-column:auto}
-.categories,.products,.features{padding:60px 24px}
-.product-grid{grid-template-columns:repeat(2,1fr)}.product-card:nth-child(2),.product-card:nth-child(5),.product-card:nth-child(8){margin-top:0}
-.editorial{grid-template-columns:1fr}.editorial-text{padding:48px 24px}.editorial-img{height:300px}
-.feat-grid{grid-template-columns:repeat(2,1fr);gap:24px}
-.newsletter{padding:60px 24px}.nl-form{flex-direction:column}.nl-form input{border-right:1px solid rgba(255,255,255,.15)}
-footer{padding:40px 24px}.footer-grid{grid-template-columns:1fr;gap:24px}
-.pdp-hero-full{height:60vh}.pdp-hero-content{left:24px;bottom:32px}
-.pdp-info-section{padding:40px 24px;grid-template-columns:1fr;gap:32px}.pdp-img-col{position:static}
-.pdp-parallax-section{height:40vh}.pdp-par-text{left:24px;bottom:24px}
-.pdp-details-section{padding:40px 24px}.detail-row,.detail-row.reverse{grid-template-columns:1fr;direction:ltr}.detail-text{padding:16px 0}
-.pdp-close{left:24px}
+nav{padding:0 24px}.nav-links a:not(.nav-cta-link){display:none}
+.hero{grid-template-columns:1fr;min-height:auto}.hero-left{padding:120px 24px 60px}.hero-right{height:50vh}
+.section{padding:80px 24px}.srv-row{grid-template-columns:1fr}.srv-item:nth-child(n){grid-column:auto!important;margin-top:0!important}.pricing-grid,.process-row{grid-template-columns:1fr}
+.work-grid{grid-template-columns:1fr}.work-grid .case:nth-child(1),.work-grid .case:nth-child(4),.work-grid .case:nth-child(5),.work-grid .case:nth-child(8){grid-row:auto;grid-column:auto}.work-grid .case .case-img{min-height:250px!important}
+.srv-detail-inner,.srv-detail-inner.reverse{grid-template-columns:1fr;direction:ltr}
+.srv-detail-text,.srv-detail-inner.reverse .srv-detail-text{padding:48px 24px}
+.srv-detail-img{height:300px}.srv-includes-grid{grid-template-columns:1fr}.srv-stat-row{flex-wrap:wrap;gap:20px}
+.team-row{grid-template-columns:repeat(2,1fr)}.contact-split{grid-template-columns:1fr}
+.contact-right{border-left:1px solid var(--border)}.form-row{grid-template-columns:1fr}
+.marquee-item{padding:0 24px;font-size:12px}
+footer{padding:48px 24px 20px}.ft-top{grid-template-columns:1fr;gap:24px}.ft-bot{flex-direction:column;gap:8px;text-align:center}
 }
 </style>
 </head>
 <body>
+<div class="cursor"></div>
+<div class="cursor-dot"></div>
+<div class="mouse-glow"></div>
+
 <nav><div class="nav-inner">
-<div class="nav-logo" onclick="showPage('shop')">
-<div class="nav-logo-mark">F</div>
-<div class="nav-logo-text">FORMA</div>
-</div>
+<div class="logo-text" onclick="showPage('home')">APEX DIGITAL</div>
 <ul class="nav-links">
-<li><a onclick="showPage('shop')" data-page="shop" class="active">Shop</a></li>
-<li><a onclick="showPage('collections')" data-page="collections">Collections</a></li>
-<li><a onclick="showPage('makers')" data-page="makers">Makers</a></li>
-<li><a onclick="showPage('journal')" data-page="journal">Journal</a></li>
+<li><a onclick="showPage('home')" class="active" data-page="home">Home</a></li>
+<li><a onclick="showPage('services')" data-page="services">Services</a></li>
+<li><a onclick="showPage('work')" data-page="work">Work</a></li>
 <li><a onclick="showPage('about')" data-page="about">About</a></li>
+<li><a onclick="showPage('pricing')" data-page="pricing">Pricing</a></li>
+<li><a onclick="showPage('contact')" data-page="contact" class="nav-cta-link">Start a Project</a></li>
 </ul>
-<div class="nav-icons">
-<svg class="nav-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-<svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-<span class="cart-count"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>
-</div>
 </div></nav>
 
-<!-- SHOP PAGE -->
-<div id="page-shop" class="page active">
-
-<!-- HERO -->
+<!-- HOME -->
+<div id="page-home" class="page active">
 <section class="hero">
 <div class="hero-left">
-<div class="hero-tag fly-left d1">New Collection — Spring 2026</div>
-<h1 class="fly-left d2">Objects that define <em>beautiful</em> living</h1>
-<p class="hero-desc fly-left d3">Curated home objects from independent makers and studios worldwide. Each piece selected for craft, material integrity, and timeless design.</p>
-<div class="hero-btns fly-up d4"><a onclick="showPage('collections')" class="btn-dark">Shop Collection</a><a onclick="showPage('about')" class="btn-outline">Our Story</a></div>
+<div class="hero-tag"><span class="hero-tag-line"></span>eCommerce Growth Agency</div>
+<h1>We build<br>brands that<br><span class="highlight">print money</span></h1>
+<p class="hero-desc">Shopify design & development for DTC brands doing $500K+ in revenue. Strategy-first, conversion-obsessed, pixel-perfect.</p>
+<div class="hero-cta-row">
+<a onclick="showPage('contact')" class="btn-main">Start a Project</a>
+<a onclick="showPage('work')" class="btn-line">View Work <span>→</span></a>
 </div>
-<div class="hero-right fly-right d2">
-<img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=80" alt="Curated living space">
 </div>
+<div class="hero-right">
+<img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1000&q=80" alt="Online shopping eCommerce">
+<div class="hero-right-overlay"></div>
+</div>
+<div class="hero-scroll"><div class="scroll-line"></div>Scroll</div>
 </section>
 
-<!-- TICKER -->
-<div class="ticker"><div class="ticker-track">
-<span class="ticker-item"><span class="ticker-dot"></span>Free shipping over €200</span>
-<span class="ticker-item"><span class="ticker-dot"></span>Handpicked by our design team</span>
-<span class="ticker-item"><span class="ticker-dot"></span>Independent makers worldwide</span>
-<span class="ticker-item"><span class="ticker-dot"></span>30-day returns</span>
-<span class="ticker-item"><span class="ticker-dot"></span>Sustainably sourced</span>
-<span class="ticker-item"><span class="ticker-dot"></span>Free shipping over €200</span>
-<span class="ticker-item"><span class="ticker-dot"></span>Handpicked by our design team</span>
-<span class="ticker-item"><span class="ticker-dot"></span>Independent makers worldwide</span>
-<span class="ticker-item"><span class="ticker-dot"></span>30-day returns</span>
-<span class="ticker-item"><span class="ticker-dot"></span>Sustainably sourced</span>
+<div class="marquee"><div class="marquee-track">
+<span class="marquee-item"><span class="marquee-dot"></span>SHOPIFY PARTNER</span>
+<span class="marquee-item"><span class="marquee-dot"></span>$40M+ REVENUE GENERATED</span>
+<span class="marquee-item"><span class="marquee-dot"></span>150+ BRANDS SCALED</span>
+<span class="marquee-item"><span class="marquee-dot"></span>4.9 ★ CLIENT RATING</span>
+<span class="marquee-item"><span class="marquee-dot"></span>SHOPIFY PARTNER</span>
+<span class="marquee-item"><span class="marquee-dot"></span>$40M+ REVENUE GENERATED</span>
+<span class="marquee-item"><span class="marquee-dot"></span>150+ BRANDS SCALED</span>
+<span class="marquee-item"><span class="marquee-dot"></span>4.9 ★ CLIENT RATING</span>
 </div></div>
 
-<!-- CATEGORIES -->
-<section class="categories">
-<div class="s-label fly-left d1">Browse by Category</div>
-<div class="s-title">Find your style</div>
-<div class="cat-grid">
-<div class="cat-card"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80" alt="Furniture"><div class="cat-overlay"><div class="cat-name">Furniture</div><div class="cat-count">124 pieces</div></div></div>
-<div class="cat-card"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80" alt="Ceramics"><div class="cat-overlay"><div class="cat-name">Ceramics</div><div class="cat-count">86 pieces</div></div></div>
-<div class="cat-card"><img src="https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=600&q=80" alt="Lighting"><div class="cat-overlay"><div class="cat-name">Lighting</div><div class="cat-count">52 pieces</div></div></div>
-<div class="cat-card"><img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&q=80" alt="Textiles"><div class="cat-overlay"><div class="cat-name">Textiles & Art</div><div class="cat-count">198 pieces</div></div></div>
+<section class="section">
+<div class="s-label"><span class="s-label-line"></span>Services</div>
+<h2 class="s-title">What we do best</h2>
+<div class="srv-row">
+<div class="srv-item"><div class="srv-icon-row"><div class="srv-number">01</div><svg class="srv-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><h3>Store Design</h3><p>Custom Shopify themes from scratch. Mobile-first, conversion-optimized, and unmistakably on-brand. No templates, ever.</p></div>
+<div class="srv-item"><div class="srv-icon-row"><div class="srv-number">02</div><svg class="srv-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3>CRO & UX</h3><p>Data-driven funnel optimization. A/B testing, heatmaps, and user research to maximize every click and boost AOV.</p></div>
+<div class="srv-item"><div class="srv-icon-row"><div class="srv-number">03</div><svg class="srv-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><h3>Brand Identity</h3><p>Complete visual systems — logo, typography, color, photography direction, packaging, and brand guidelines.</p></div>
+<div class="srv-item"><div class="srv-icon-row"><div class="srv-number">04</div><svg class="srv-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h3>Development</h3><p>Custom Liquid, headless Hydrogen builds, app integrations, and performance optimization that ships fast.</p></div>
+<div class="srv-item"><div class="srv-icon-row"><div class="srv-number">05</div><svg class="srv-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h3>Landing Pages</h3><p>High-converting pages for launches and paid traffic. Designed and built in 5 business days, guaranteed.</p></div>
+<div class="srv-item"><div class="srv-icon-row"><div class="srv-number">06</div><svg class="srv-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><h3>Email & Retention</h3><p>Klaviyo flows, templates, and segmentation strategy that turns one-time buyers into lifetime customers.</p></div>
+</div></section>
+
+<section class="testi-section"><div class="testi-inner">
+<div class="s-label" style="justify-content:center"><span class="s-label-line"></span>Client Voices<span class="s-label-line"></span></div>
+<div class="testi-carousel">
+<div class="testi-slide active"><p class="testi-quote">"Apex transformed our entire brand. Revenue jumped 186% in Q1 after launch. They don't just design — they think like growth partners."</p><div class="testi-author">Emma Richards</div><div class="testi-role">Founder, Lumina Skincare</div></div>
+<div class="testi-slide"><p class="testi-quote">"Our subscription rate went from 12% to 45%. The ROI on this project was absurd. Best agency investment we've ever made."</p><div class="testi-author">Ana Torres</div><div class="testi-role">CMO, Ritual Coffee Co.</div></div>
+<div class="testi-slide"><p class="testi-quote">"$2.4M in year one revenue on a store they built from scratch. These people understand eCommerce at a molecular level."</p><div class="testi-author">David Kim</div><div class="testi-role">CEO, Stride Athletics</div></div>
+<div class="testi-slide"><p class="testi-quote">"They redesigned our entire checkout flow and AOV jumped 67% overnight. Apex pays for itself within the first month."</p><div class="testi-author">Lauren Hayes</div><div class="testi-role">Head of Digital, Maison Éclat</div></div>
+<div class="testi-slide"><p class="testi-quote">"Finally, an agency that backs up their design with real data. Every decision they made was rooted in conversion science."</p><div class="testi-author">James Chen</div><div class="testi-role">Co-founder, Vela Supplements</div></div>
 </div>
+<div class="testi-nav">
+<button class="testi-arrow" onclick="prevSlide()">←</button>
+<div class="testi-dots"><div class="testi-dot active" onclick="showSlide(0)"></div><div class="testi-dot" onclick="showSlide(1)"></div><div class="testi-dot" onclick="showSlide(2)"></div><div class="testi-dot" onclick="showSlide(3)"></div><div class="testi-dot" onclick="showSlide(4)"></div></div>
+<button class="testi-arrow" onclick="nextSlide()">→</button>
+</div>
+</div></section>
+</div>
+
+<!-- SERVICES -->
+<div id="page-services" class="page">
+<section class="section" style="padding-top:140px">
+<div class="s-label"><span class="s-label-line"></span>Our Services</div>
+<h2 class="s-title">We don't just design stores.<br>We engineer revenue machines.</h2>
+<p class="s-desc">Every service is built around one metric: your bottom line. Here's exactly what we do, how we do it, and what you get.</p>
 </section>
 
-<!-- PRODUCTS -->
-<section class="products">
-<div class="products-inner">
-<div class="products-header">
-<div><div class="s-label">New Arrivals</div><div class="s-title">Just landed</div></div>
-<div class="filter-row"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="furniture">Furniture</button><button class="filter-btn" data-filter="ceramics">Ceramics</button><button class="filter-btn" data-filter="lighting">Lighting</button></div>
-</div>
-<div class="product-grid">
-<div class="product-card" data-cat="furniture" data-product="arc-chair" onclick="showProduct('arc-chair')"><div class="product-img"><img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=500&q=80" alt="Lounge Chair"><div class="product-badge">New</div><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Studio Aura</div><div class="product-name">Arc Lounge Chair</div><div class="product-price">€1,240</div></div></div>
-
-<div class="product-card" data-cat="ceramics" data-product="vase-7" onclick="showProduct('vase-7')"><div class="product-img"><img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500&q=80" alt="Ceramic Vase"><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Atelier Terre</div><div class="product-name">Sculptural Vase No.7</div><div class="product-price">€185</div></div></div>
-
-<div class="product-card" data-cat="lighting" data-product="orb-pendant" onclick="showProduct('orb-pendant')"><div class="product-img"><img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=500&q=80" alt="Pendant Light"><div class="product-badge">Bestseller</div><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Lumen Works</div><div class="product-name">Orb Pendant Light</div><div class="product-price">€420</div></div></div>
-
-<div class="product-card" data-cat="ceramics" data-product="planter" onclick="showProduct('planter')"><div class="product-img"><img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=500&q=80" alt="Planter"><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Verde Studio</div><div class="product-name">Ribbed Planter</div><div class="product-price">€95</div></div></div>
-
-<div class="product-card" data-cat="furniture" data-product="wave-sofa" onclick="showProduct('wave-sofa')"><div class="product-img"><img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=500&q=80" alt="Sofa"><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Nōrd Design</div><div class="product-name">Wave Sofa</div><div class="product-price">€3,800 <span class="old">€4,200</span></div></div></div>
-
-<div class="product-card" data-cat="ceramics" data-product="tea-set" onclick="showProduct('tea-set')"><div class="product-img"><img src="https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=500&q=80" alt="Tea Set"><div class="product-badge">Limited</div><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Kintsugi Lab</div><div class="product-name">Tea Set — Gold Repair</div><div class="product-price">€340</div></div></div>
-
-<div class="product-card" data-cat="furniture" data-product="mirror" onclick="showProduct('mirror')"><div class="product-img"><img src="https://images.unsplash.com/photo-1618220179428-22790b461013?w=500&q=80" alt="Mirror"><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Reflect Co.</div><div class="product-name">Asymmetric Mirror</div><div class="product-price">€560</div></div></div>
-
-<div class="product-card" data-cat="lighting" data-product="candle-holder" onclick="showProduct('candle-holder')"><div class="product-img"><img src="https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=500&q=80" alt="Candle Holder"><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Cera Studio</div><div class="product-name">Column Candle Holder</div><div class="product-price">€78</div></div></div>
+<!-- Service Detail Blocks - alternating layout -->
+<div class="srv-detail">
+<div class="srv-detail-inner">
+<div class="srv-detail-text">
+<div class="srv-detail-num" style="color:#818cf8">01</div>
+<h3>Shopify Store Design & Build</h3>
+<p class="srv-detail-lead">Your store is your most important salesperson. We make sure it closes.</p>
+<p>We design and build custom Shopify stores from a blank canvas — no templates, no themes, no shortcuts. Every element is strategically placed to guide visitors toward purchase. Mobile-first design ensures 60%+ of your traffic converts, not just browses.</p>
+<div class="srv-includes">
+<h4>What's included:</h4>
+<div class="srv-includes-grid">
+<span>Custom Figma mockups</span><span>Mobile-first development</span><span>Product page optimization</span><span>Collection page design</span><span>Cart & checkout flow</span><span>Speed optimization</span><span>SEO foundation</span><span>Analytics setup</span>
 </div>
 </div>
-</section>
-
-<!-- EDITORIAL -->
-<section class="editorial">
-<div class="editorial-img"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&q=80" alt="Interior styled room"></div>
-<div class="editorial-text">
-<div class="s-label">The Makers</div>
-<h2>Every object tells the story of the hands that made it</h2>
-<p>We visit every studio, meet every maker, and verify every material before a piece enters our collection. Quality isn't negotiable — it's the starting point.</p>
-<a href="#" class="editorial-link">Meet our makers →</a>
+<div class="srv-stat-row">
+<div class="srv-stat"><span class="srv-stat-n">3.2%</span><span class="srv-stat-l">Avg. conversion rate</span></div>
+<div class="srv-stat"><span class="srv-stat-n">1.8s</span><span class="srv-stat-l">Avg. load time</span></div>
+<div class="srv-stat"><span class="srv-stat-n">14 days</span><span class="srv-stat-l">Avg. delivery</span></div>
 </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features">
-<div class="feat-grid">
-<div class="feat-item"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><h3>Curated Selection</h3><p>Every piece hand-picked from studios worldwide</p></div>
-<div class="feat-item"><div class="feat-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h3>Free Shipping</h3><p>Complimentary on orders over €200</p></div>
-<div class="feat-item"><div class="feat-icon"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></div><h3>30-Day Returns</h3><p>Full refund, no questions asked</p></div>
-<div class="feat-item"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Secure Payment</h3><p>SSL encrypted, all cards accepted</p></div>
 </div>
-</section>
-
-<!-- NEWSLETTER -->
-<section class="newsletter">
-<h2>Join the FORMA community</h2>
-<p>First access to new arrivals, studio visits, and design stories.</p>
-<div class="nl-form"><input type="email" placeholder="Your email address"><button>Subscribe</button></div>
-</section>
-
-<!-- end newsletter -->
-</div><!-- end page-shop -->
-
-<!-- COLLECTIONS PAGE -->
-<div id="page-collections" class="page">
-<section style="margin-top:72px;padding:80px 48px;max-width:1400px;margin-left:auto;margin-right:auto">
-<div class="s-label fly-down d1">Curated Collections</div>
-<h2 class="s-title" style="margin-bottom:16px" class="fly-up d2">Thoughtfully grouped, beautifully made</h2>
-<p style="font-size:15px;color:var(--muted);line-height:1.7;max-width:500px;margin-bottom:56px"><span class="fly-up d3" style="display:block">Each collection is a mood — a set of objects chosen to work together in a single space, telling a cohesive design story.</p>
-</section>
-<div style="padding:0 48px;max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px">
-<div onclick="showPage('col-living')" style="position:relative;overflow:hidden;border-radius:8px;aspect-ratio:4/3;cursor:pointer"><img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .6s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,22,.7),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:32px"><div style="font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:4px">The Living Room Edit</div><div style="font-size:12px;color:rgba(255,255,255,.7)">18 pieces · Warm neutrals</div></div></div>
-<div onclick="showPage('col-luxury')" style="position:relative;overflow:hidden;border-radius:8px;aspect-ratio:4/3;cursor:pointer" class="fly-right d3"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .6s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,22,.7),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:32px"><div style="font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:4px">Quiet Luxury</div><div style="font-size:12px;color:rgba(255,255,255,.7)">12 pieces · Understated elegance</div></div></div>
-</div>
-<div style="padding:0 48px;max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:80px">
-<div onclick="showPage('col-japandi')" style="position:relative;overflow:hidden;border-radius:8px;aspect-ratio:3/4;cursor:pointer"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .6s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,22,.7),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px"><div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:4px">Japandi</div><div style="font-size:11px;color:rgba(255,255,255,.7)">24 pieces</div></div></div>
-<div onclick="showPage('col-ceramic')" style="position:relative;overflow:hidden;border-radius:8px;aspect-ratio:3/4;cursor:pointer"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .6s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,22,.7),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px"><div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:4px">Ceramic Studio</div><div style="font-size:11px;color:rgba(255,255,255,.7)">16 pieces</div></div></div>
-<div onclick="showPage('col-texture')" style="position:relative;overflow:hidden;border-radius:8px;aspect-ratio:3/4;cursor:pointer"><img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .6s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,22,.7),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px"><div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:4px">Texture & Tone</div><div style="font-size:11px;color:rgba(255,255,255,.7)">20 pieces</div></div></div>
+<div class="srv-detail-img"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80" alt="Store design"></div>
 </div>
 </div>
 
-<!-- COLLECTION: LIVING ROOM EDIT -->
-<div id="page-col-living" class="page">
-<div style="margin-top:72px;height:60vh;position:relative;overflow:hidden">
-<img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1400&q=80" style="width:100%;height:100%;object-fit:cover">
-<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(244,241,236,.95))"></div>
-<div style="position:absolute;bottom:48px;left:80px;z-index:2">
-<div class="s-label fly-down d1">Collection</div>
-<div class="fly-left d2" style="font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,56px);font-weight:400;margin-bottom:8px">The Living Room Edit</div>
-<p class="fly-left d3" style="font-size:15px;color:var(--muted);max-width:400px">18 curated pieces in warm neutrals — designed to make any living space feel like a sanctuary.</p>
+<div class="srv-detail alt">
+<div class="srv-detail-inner reverse">
+<div class="srv-detail-text">
+<div class="srv-detail-num" style="color:#a5b4fc">02</div>
+<h3>Conversion Rate Optimization</h3>
+<p class="srv-detail-lead">Stop leaving money on the table. We find it and pick it up.</p>
+<p>We audit your entire purchase funnel using heatmaps, session recordings, and analytics. Then we run structured A/B tests to validate improvements before rolling them out. Our clients see an average 40-80% lift in conversion rate within 90 days.</p>
+<div class="srv-includes">
+<h4>What's included:</h4>
+<div class="srv-includes-grid">
+<span>Full UX audit</span><span>Heatmap analysis</span><span>Session recordings</span><span>A/B test strategy</span><span>Checkout optimization</span><span>Mobile UX fixes</span><span>Copy improvements</span><span>Monthly reporting</span>
 </div>
 </div>
-<div style="padding:64px 48px;max-width:1400px;margin:0 auto">
-<a onclick="showPage('collections')" style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);cursor:pointer;margin-bottom:48px;display:inline-block">← Back to Collections</a>
-<div class="product-grid" style="margin-top:24px">
-<div class="product-card fly-up d1" onclick="showProduct('arc-chair')"><div class="product-img"><img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=500&q=80" alt="Chair"></div><div class="product-info"><div class="product-brand">Studio Aura</div><div class="product-name">Arc Lounge Chair</div><div class="product-price">€1,240</div></div></div>
-<div class="product-card fly-up d2" onclick="showProduct('wave-sofa')"><div class="product-img"><img src="https://images.unsplash.com/photo-1550226891-ef816aed4a98?w=500&q=80" alt="Sofa"></div><div class="product-info"><div class="product-brand">Nōrd Design</div><div class="product-name">Wave Sofa</div><div class="product-price">€3,800</div></div></div>
-<div class="product-card fly-up d3" onclick="showProduct('mirror')"><div class="product-img"><img src="https://images.unsplash.com/photo-1616627577385-5c0c2d8a3d77?w=500&q=80" alt="Mirror"></div><div class="product-info"><div class="product-brand">Reflect Co.</div><div class="product-name">Asymmetric Mirror</div><div class="product-price">€560</div></div></div>
-<div class="product-card fly-up d4" onclick="showProduct('candle-holder')"><div class="product-img"><img src="https://images.unsplash.com/photo-1603204077779-bed963ea7d0e?w=500&q=80" alt="Candle"></div><div class="product-info"><div class="product-brand">Cera Studio</div><div class="product-name">Column Candle Holder</div><div class="product-price">€78</div></div></div>
+<div class="srv-stat-row">
+<div class="srv-stat"><span class="srv-stat-n">62%</span><span class="srv-stat-l">Avg. CVR increase</span></div>
+<div class="srv-stat"><span class="srv-stat-n">34%</span><span class="srv-stat-l">Avg. AOV increase</span></div>
+<div class="srv-stat"><span class="srv-stat-n">90 days</span><span class="srv-stat-l">To measurable results</span></div>
 </div>
 </div>
-</div>
-
-<!-- COLLECTION: QUIET LUXURY -->
-<div id="page-col-luxury" class="page">
-<div style="margin-top:72px;height:60vh;position:relative;overflow:hidden">
-<img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1400&q=80" style="width:100%;height:100%;object-fit:cover">
-<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(244,241,236,.95))"></div>
-<div style="position:absolute;bottom:48px;left:80px;z-index:2">
-<div class="s-label fly-down d1">Collection</div>
-<div class="fly-left d2" style="font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,56px);font-weight:400;margin-bottom:8px">Quiet Luxury</div>
-<p class="fly-left d3" style="font-size:15px;color:var(--muted);max-width:400px">12 understated pieces that speak through material quality, not volume. For spaces that whisper.</p>
-</div>
-</div>
-<div style="padding:64px 48px;max-width:1400px;margin:0 auto">
-<a onclick="showPage('collections')" style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);cursor:pointer;margin-bottom:48px;display:inline-block">← Back to Collections</a>
-<div class="product-grid" style="margin-top:24px">
-<div class="product-card fly-up d1" onclick="showProduct('vase-7')"><div class="product-img"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=500&q=80" alt="Vase"></div><div class="product-info"><div class="product-brand">Atelier Terre</div><div class="product-name">Sculptural Vase No.7</div><div class="product-price">€185</div></div></div>
-<div class="product-card fly-up d2" onclick="showProduct('tea-set')"><div class="product-img"><img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=500&q=80" alt="Tea Set"></div><div class="product-info"><div class="product-brand">Kintsugi Lab</div><div class="product-name">Tea Set — Gold Repair</div><div class="product-price">€340</div></div></div>
-<div class="product-card fly-up d3" onclick="showProduct('orb-pendant')"><div class="product-img"><img src="https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=500&q=80" alt="Pendant"></div><div class="product-info"><div class="product-brand">Lumen Works</div><div class="product-name">Orb Pendant Light</div><div class="product-price">€420</div></div></div>
-<div class="product-card fly-up d4" onclick="showProduct('arc-chair')"><div class="product-img"><img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=500&q=80" alt="Chair"></div><div class="product-info"><div class="product-brand">Studio Aura</div><div class="product-name">Arc Lounge Chair</div><div class="product-price">€1,240</div></div></div>
-</div>
+<div class="srv-detail-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=80" alt="Analytics dashboard"></div>
 </div>
 </div>
 
-<!-- COLLECTION: JAPANDI -->
-<div id="page-col-japandi" class="page">
-<div style="margin-top:72px;height:60vh;position:relative;overflow:hidden">
-<img src="https://images.unsplash.com/photo-1545083036-b175dd155a1d?w=1400&q=80" style="width:100%;height:100%;object-fit:cover">
-<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(244,241,236,.95))"></div>
-<div style="position:absolute;bottom:48px;left:80px;z-index:2">
-<div class="s-label fly-down d1">Collection</div>
-<div class="fly-left d2" style="font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,56px);font-weight:400;margin-bottom:8px">Japandi</div>
-<p class="fly-left d3" style="font-size:15px;color:var(--muted);max-width:400px">24 pieces blending Japanese minimalism with Scandinavian warmth. Clean lines, natural materials, quiet beauty.</p>
+<div class="srv-detail">
+<div class="srv-detail-inner">
+<div class="srv-detail-text">
+<div class="srv-detail-num" style="color:#a78bfa">03</div>
+<h3>Brand Identity & Visual Systems</h3>
+<p class="srv-detail-lead">People don't buy products. They buy brands they believe in.</p>
+<p>We build complete brand identities from scratch — logo, color systems, typography, photography direction, packaging design, and comprehensive guidelines. Every touchpoint tells a cohesive story that makes your brand instantly recognizable and impossible to forget.</p>
+<div class="srv-includes">
+<h4>What's included:</h4>
+<div class="srv-includes-grid">
+<span>Logo & mark design</span><span>Color system</span><span>Typography selection</span><span>Photography direction</span><span>Packaging design</span><span>Brand guidelines PDF</span><span>Social media templates</span><span>Icon library</span>
 </div>
 </div>
-<div style="padding:64px 48px;max-width:1400px;margin:0 auto">
-<a onclick="showPage('collections')" style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);cursor:pointer;margin-bottom:48px;display:inline-block">← Back to Collections</a>
-<div class="product-grid" style="margin-top:24px">
-<div class="product-card fly-up d1" onclick="showProduct('tea-set')"><div class="product-img"><img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=500&q=80" alt="Tea"></div><div class="product-info"><div class="product-brand">Kintsugi Lab</div><div class="product-name">Tea Set — Gold Repair</div><div class="product-price">€340</div></div></div>
-<div class="product-card fly-up d2" onclick="showProduct('planter')"><div class="product-img"><img src="https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=500&q=80" alt="Planter"></div><div class="product-info"><div class="product-brand">Verde Studio</div><div class="product-name">Ribbed Planter</div><div class="product-price">€95</div></div></div>
-<div class="product-card fly-up d3" onclick="showProduct('candle-holder')"><div class="product-img"><img src="https://images.unsplash.com/photo-1603204077779-bed963ea7d0e?w=500&q=80" alt="Candle"></div><div class="product-info"><div class="product-brand">Cera Studio</div><div class="product-name">Column Candle Holder</div><div class="product-price">€78</div></div></div>
-<div class="product-card fly-up d4" onclick="showProduct('vase-7')"><div class="product-img"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=500&q=80" alt="Vase"></div><div class="product-info"><div class="product-brand">Atelier Terre</div><div class="product-name">Sculptural Vase No.7</div><div class="product-price">€185</div></div></div>
 </div>
+<div class="srv-detail-img"><img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=700&q=80" alt="Brand design"></div>
 </div>
 </div>
 
-<!-- COLLECTION: CERAMIC STUDIO -->
-<div id="page-col-ceramic" class="page">
-<div style="margin-top:72px;height:60vh;position:relative;overflow:hidden">
-<img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=1400&q=80" style="width:100%;height:100%;object-fit:cover">
-<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(244,241,236,.95))"></div>
-<div style="position:absolute;bottom:48px;left:80px;z-index:2">
-<div class="s-label fly-down d1">Collection</div>
-<div class="fly-left d2" style="font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,56px);font-weight:400;margin-bottom:8px">Ceramic Studio</div>
-<p class="fly-left d3" style="font-size:15px;color:var(--muted);max-width:400px">16 handmade ceramic pieces from studios in Lisbon, Kyoto, and Athens. Each one unique, each one alive.</p>
+<div class="srv-detail alt">
+<div class="srv-detail-inner reverse">
+<div class="srv-detail-text">
+<div class="srv-detail-num" style="color:#c4b5fd">04</div>
+<h3>Email & Lifecycle Marketing</h3>
+<p class="srv-detail-lead">Acquisition is expensive. Retention is profitable. We build the engine.</p>
+<p>We design and build complete Klaviyo email systems — welcome flows, abandoned cart sequences, post-purchase nurture, win-back campaigns, and segmented blasts. Beautiful templates that match your brand and automated flows that generate revenue while you sleep.</p>
+<div class="srv-includes">
+<h4>What's included:</h4>
+<div class="srv-includes-grid">
+<span>Welcome flow (5-7 emails)</span><span>Abandoned cart flow</span><span>Post-purchase nurture</span><span>Win-back campaign</span><span>Custom email templates</span><span>Segmentation strategy</span><span>Campaign calendar</span><span>Performance reporting</span>
 </div>
 </div>
-<div style="padding:64px 48px;max-width:1400px;margin:0 auto">
-<a onclick="showPage('collections')" style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);cursor:pointer;margin-bottom:48px;display:inline-block">← Back to Collections</a>
-<div class="product-grid" style="margin-top:24px">
-<div class="product-card fly-up d1" onclick="showProduct('vase-7')"><div class="product-img"><img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500&q=80" alt="Vase"></div><div class="product-info"><div class="product-brand">Atelier Terre</div><div class="product-name">Sculptural Vase No.7</div><div class="product-price">€185</div></div></div>
-<div class="product-card fly-up d2" onclick="showProduct('planter')"><div class="product-img"><img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=500&q=80" alt="Planter"></div><div class="product-info"><div class="product-brand">Verde Studio</div><div class="product-name">Ribbed Planter</div><div class="product-price">€95</div></div></div>
-<div class="product-card fly-up d3" onclick="showProduct('tea-set')"><div class="product-img"><img src="https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=500&q=80" alt="Tea"></div><div class="product-info"><div class="product-brand">Kintsugi Lab</div><div class="product-name">Tea Set — Gold Repair</div><div class="product-price">€340</div></div></div>
-<div class="product-card fly-up d4" onclick="showProduct('candle-holder')"><div class="product-img"><img src="https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=500&q=80" alt="Candle"></div><div class="product-info"><div class="product-brand">Cera Studio</div><div class="product-name">Column Candle Holder</div><div class="product-price">€78</div></div></div>
+<div class="srv-stat-row">
+<div class="srv-stat"><span class="srv-stat-n">28%</span><span class="srv-stat-l">Avg. revenue from email</span></div>
+<div class="srv-stat"><span class="srv-stat-n">45%</span><span class="srv-stat-l">Open rate average</span></div>
+<div class="srv-stat"><span class="srv-stat-n">8x</span><span class="srv-stat-l">ROI on email spend</span></div>
 </div>
 </div>
-</div>
-
-<!-- COLLECTION: TEXTURE & TONE -->
-<div id="page-col-texture" class="page">
-<div style="margin-top:72px;height:60vh;position:relative;overflow:hidden">
-<img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=1400&q=80" style="width:100%;height:100%;object-fit:cover">
-<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(244,241,236,.95))"></div>
-<div style="position:absolute;bottom:48px;left:80px;z-index:2">
-<div class="s-label fly-down d1">Collection</div>
-<div class="fly-left d2" style="font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,56px);font-weight:400;margin-bottom:8px">Texture & Tone</div>
-<p class="fly-left d3" style="font-size:15px;color:var(--muted);max-width:400px">20 pieces chosen for their tactile richness — woven, carved, glazed, and stitched. Objects you want to touch.</p>
-</div>
-</div>
-<div style="padding:64px 48px;max-width:1400px;margin:0 auto">
-<a onclick="showPage('collections')" style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);cursor:pointer;margin-bottom:48px;display:inline-block">← Back to Collections</a>
-<div class="product-grid" style="margin-top:24px">
-<div class="product-card fly-up d1" onclick="showProduct('wave-sofa')"><div class="product-img"><img src="https://images.unsplash.com/photo-1550226891-ef816aed4a98?w=500&q=80" alt="Sofa"></div><div class="product-info"><div class="product-brand">Nōrd Design</div><div class="product-name">Wave Sofa</div><div class="product-price">€3,800</div></div></div>
-<div class="product-card fly-up d2" onclick="showProduct('arc-chair')"><div class="product-img"><img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=500&q=80" alt="Chair"></div><div class="product-info"><div class="product-brand">Studio Aura</div><div class="product-name">Arc Lounge Chair</div><div class="product-price">€1,240</div></div></div>
-<div class="product-card fly-up d3" onclick="showProduct('orb-pendant')"><div class="product-img"><img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=500&q=80" alt="Pendant"></div><div class="product-info"><div class="product-brand">Lumen Works</div><div class="product-name">Orb Pendant Light</div><div class="product-price">€420</div></div></div>
-<div class="product-card fly-up d4" onclick="showProduct('mirror')"><div class="product-img"><img src="https://images.unsplash.com/photo-1616627577385-5c0c2d8a3d77?w=500&q=80" alt="Mirror"></div><div class="product-info"><div class="product-brand">Reflect Co.</div><div class="product-name">Asymmetric Mirror</div><div class="product-price">€560</div></div></div>
-</div>
+<div class="srv-detail-img"><img src="https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=700&q=80" alt="Email marketing"></div>
 </div>
 </div>
 
-<!-- MAKERS PAGE -->
-<div id="page-makers" class="page">
-<section style="margin-top:72px;padding:80px 48px;max-width:1400px;margin-left:auto;margin-right:auto">
-<div class="s-label fly-down d1">Our Makers</div>
-<h2 class="s-title" style="margin-bottom:16px" class="fly-up d2">The hands behind every object</h2>
-<p style="font-size:15px;color:var(--muted);line-height:1.7;max-width:500px;margin-bottom:56px">We partner with independent studios and artisans worldwide. Every maker is vetted in person — their process, materials, and values must align with ours.</p>
-</section>
-<div style="padding:0 48px;max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-bottom:80px;align-items:start">
-<div style="cursor:pointer" class="fly-up d1"><div style="aspect-ratio:1;overflow:hidden;border-radius:50%;margin-bottom:20px"><img src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=500&q=80" style="width:100%;height:100%;object-fit:cover;filter:grayscale(.3);transition:all .5s" onmouseover="this.style.filter='grayscale(0)';this.style.transform='scale(1.05)'" onmouseout="this.style.filter='grayscale(.3)';this.style.transform='scale(1)'"></div><div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px">Studio Aura</div><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Copenhagen, Denmark</div><div style="font-size:11px;color:var(--accent);letter-spacing:1px;font-weight:600">FURNITURE</div></div></div>
-<div style="cursor:pointer;margin-top:48px" class="fly-up d3"><div style="aspect-ratio:1;overflow:hidden;border-radius:50%;margin-bottom:20px"><img src="https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=500&q=80" style="width:100%;height:100%;object-fit:cover;filter:grayscale(.3);transition:all .5s" onmouseover="this.style.filter='grayscale(0)';this.style.transform='scale(1.05)'" onmouseout="this.style.filter='grayscale(.3)';this.style.transform='scale(1)'"></div><div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px">Atelier Terre</div><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Lisbon, Portugal</div><div style="font-size:11px;color:var(--accent);letter-spacing:1px;font-weight:600">CERAMICS</div></div></div>
-<div style="cursor:pointer" class="fly-up d5"><div style="aspect-ratio:1;overflow:hidden;border-radius:50%;margin-bottom:20px"><img src="https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=500&q=80" style="width:100%;height:100%;object-fit:cover;filter:grayscale(.3);transition:all .5s" onmouseover="this.style.filter='grayscale(0)';this.style.transform='scale(1.05)'" onmouseout="this.style.filter='grayscale(.3)';this.style.transform='scale(1)'"></div><div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px">Kintsugi Lab</div><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Kyoto, Japan</div><div style="font-size:11px;color:var(--accent);letter-spacing:1px;font-weight:600">CERAMICS · GOLD</div></div></div>
-<div style="cursor:pointer;margin-top:-20px"><div style="aspect-ratio:1;overflow:hidden;border-radius:50%;margin-bottom:20px"><img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=500&q=80" style="width:100%;height:100%;object-fit:cover;filter:grayscale(.3);transition:all .5s" onmouseover="this.style.filter='grayscale(0)';this.style.transform='scale(1.05)'" onmouseout="this.style.filter='grayscale(.3)';this.style.transform='scale(1)'"></div><div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px">Lumen Works</div><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Milan, Italy</div><div style="font-size:11px;color:var(--accent);letter-spacing:1px;font-weight:600">LIGHTING</div></div></div>
-<div style="cursor:pointer;margin-top:24px"><div style="aspect-ratio:1;overflow:hidden;border-radius:50%;margin-bottom:20px"><img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=500&q=80" style="width:100%;height:100%;object-fit:cover;filter:grayscale(.3);transition:all .5s" onmouseover="this.style.filter='grayscale(0)';this.style.transform='scale(1.05)'" onmouseout="this.style.filter='grayscale(.3)';this.style.transform='scale(1)'"></div><div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px">Nōrd Design</div><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Stockholm, Sweden</div><div style="font-size:11px;color:var(--accent);letter-spacing:1px;font-weight:600">FURNITURE</div></div></div>
-<div style="cursor:pointer;margin-top:-20px"><div style="aspect-ratio:1;overflow:hidden;border-radius:50%;margin-bottom:20px"><img src="https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=500&q=80" style="width:100%;height:100%;object-fit:cover;filter:grayscale(.3);transition:all .5s" onmouseover="this.style.filter='grayscale(0)';this.style.transform='scale(1.05)'" onmouseout="this.style.filter='grayscale(.3)';this.style.transform='scale(1)'"></div><div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px">Cera Studio</div><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Athens, Greece</div><div style="font-size:11px;color:var(--accent);letter-spacing:1px;font-weight:600">CERAMICS</div></div></div>
+<div class="scroll-process">
+<div class="scroll-process-sticky">
+<div class="scroll-process-bg" id="processBg"></div>
+<div class="scroll-process-content">
+<div class="scroll-process-label">OUR PROCESS</div>
+<div class="scroll-process-step" id="processStep">01</div>
+<h2 class="scroll-process-title" id="processTitle">Discovery</h2>
+<p class="scroll-process-desc" id="processDesc">We deep-dive into your brand, audience, competitors, and business goals. Research, interviews, and competitive analysis — we learn everything before touching a single pixel.</p>
+<div class="scroll-process-bar"><div class="scroll-process-fill" id="processFill"></div></div>
+</div>
+</div>
+<div class="scroll-process-spacer"></div>
+<div class="scroll-process-spacer"></div>
+<div class="scroll-process-spacer"></div>
+<div class="scroll-process-spacer"></div>
 </div>
 </div>
 
-<!-- JOURNAL PAGE -->
-<div id="page-journal" class="page">
-<section style="margin-top:72px;padding:80px 48px;max-width:1400px;margin-left:auto;margin-right:auto">
-<div class="s-label fly-down d1">Journal</div>
-<h2 class="s-title" style="margin-bottom:56px">Stories, ideas, and studio visits</h2>
-</section>
-<div style="padding:0 48px;max-width:1400px;margin:0 auto">
-<div style="display:grid;grid-template-columns:1.5fr 1fr;gap:24px;margin-bottom:48px">
-<div style="position:relative;overflow:hidden;border-radius:8px;cursor:pointer"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&q=80" style="width:100%;height:100%;object-fit:cover;aspect-ratio:16/9;transition:transform .6s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;bottom:0;left:0;right:0;padding:32px;background:linear-gradient(to top,rgba(26,24,22,.8),transparent)"><div style="font-size:10px;letter-spacing:3px;color:var(--accent-light);margin-bottom:8px;font-weight:600">STUDIO VISIT</div><div style="font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:6px">Inside Studio Aura's Copenhagen Workshop</div><div style="font-size:12px;color:rgba(255,255,255,.6)">March 15, 2026 · 8 min read</div></div></div>
-<div style="display:flex;flex-direction:column;gap:24px">
-<div style="border-bottom:1px solid var(--border);padding-bottom:24px;cursor:pointer"><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:8px;font-weight:600">DESIGN ESSAY</div><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:6px">Why imperfection is the new luxury</div><div style="font-size:12px;color:var(--muted)">March 8, 2026 · 5 min read</div></div>
-<div style="border-bottom:1px solid var(--border);padding-bottom:24px;cursor:pointer"><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:8px;font-weight:600">MATERIAL GUIDE</div><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:6px">Understanding Japanese ceramics: a beginner's guide</div><div style="font-size:12px;color:var(--muted)">February 22, 2026 · 12 min read</div></div>
-<div style="border-bottom:1px solid var(--border);padding-bottom:24px;cursor:pointer"><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:8px;font-weight:600">INTERIOR</div><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:6px">5 rules for mixing old and new furniture</div><div style="font-size:12px;color:var(--muted)">February 10, 2026 · 6 min read</div></div>
-</div>
-</div>
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:80px">
-<div style="cursor:pointer"><div style="overflow:hidden;border-radius:8px;margin-bottom:16px;aspect-ratio:4/3"><img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .5s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:6px;font-weight:600">TREND</div><div style="font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:4px">The return of craft furniture</div><div style="font-size:12px;color:var(--muted)">January 28, 2026</div></div>
-<div style="cursor:pointer"><div style="overflow:hidden;border-radius:8px;margin-bottom:16px;aspect-ratio:4/3"><img src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=500&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .5s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:6px;font-weight:600">PROCESS</div><div style="font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:4px">How steam-bending shapes wood</div><div style="font-size:12px;color:var(--muted)">January 15, 2026</div></div>
-<div style="cursor:pointer"><div style="overflow:hidden;border-radius:8px;margin-bottom:16px;aspect-ratio:4/3"><img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=500&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .5s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:6px;font-weight:600">LIGHTING</div><div style="font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:4px">Living with natural light</div><div style="font-size:12px;color:var(--muted)">January 5, 2026</div></div>
-</div>
-</div>
+<!-- WORK -->
+<div id="page-work" class="page">
+<section class="section" style="padding-top:140px">
+<div class="s-label"><span class="s-label-line"></span>Selected Work</div>
+<h2 class="s-title">Results, not just pretty pixels</h2>
+<p class="s-desc">Every project is measured by impact. Here's the proof.</p>
+<div class="work-grid">
+<div class="case"><div class="case-img"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=800&q=80" alt="Lumina Skincare"><div class="case-overlay"><span class="tag">Shopify Plus · Skincare</span><h3>Lumina Skincare</h3><p>Complete brand redesign and Shopify Plus migration with AR try-on.</p><div class="case-metrics"><span class="case-metric">+186% CVR</span><span class="case-metric">+42% AOV</span></div></div></div></div>
+
+<div class="case"><div class="case-img"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80" alt="Stride Athletics"><div class="case-overlay"><span class="tag">DTC · Athletic</span><h3>Stride Athletics</h3><p>Custom store with product configurator and subscription model.</p><div class="case-metrics"><span class="case-metric">$2.4M Y1</span><span class="case-metric">3.2% CVR</span></div></div></div></div>
+
+<div class="case"><div class="case-img"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80" alt="Ritual Coffee"><div class="case-overlay"><span class="tag">Subscription · Coffee</span><h3>Ritual Coffee Co.</h3><p>Subscription-first store with quiz onboarding and personalization.</p><div class="case-metrics"><span class="case-metric">+94% Retention</span><span class="case-metric">45% Sub Rate</span></div></div></div></div>
+
+<div class="case"><div class="case-img"><img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80" alt="Maison Éclat"><div class="case-overlay"><span class="tag">Luxury · Jewelry</span><h3>Maison Éclat</h3><p>Immersive luxury jewelry experience with 360° product views and VIP portal.</p><div class="case-metrics"><span class="case-metric">+220% CVR</span><span class="case-metric">$380 AOV</span></div></div></div></div>
+
+<div class="case"><div class="case-img"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80" alt="Vela Watches"><div class="case-overlay"><span class="tag">DTC · Luxury Accessories</span><h3>Vela Watches</h3><p>Premium watch brand with custom engraving tool and gift experience flow.</p><div class="case-metrics"><span class="case-metric">$1.8M Rev</span><span class="case-metric">4.1% CVR</span></div></div></div></div>
+
+<div class="case"><div class="case-img"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=80" alt="Glow Studio"><div class="case-overlay"><span class="tag">Beauty · Shopify Plus</span><h3>Glow Studio</h3><p>Beauty brand replatform with shade-matching quiz and bundle builder.</p><div class="case-metrics"><span class="case-metric">+67% AOV</span><span class="case-metric">2.8% CVR</span></div></div></div></div>
+
+<div class="case"><div class="case-img"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80" alt="Haus Supply"><div class="case-overlay"><span class="tag">Home Goods · Marketplace</span><h3>Haus Supply</h3><p>Multi-vendor marketplace for curated home objects. Custom filtering and wishlist.</p><div class="case-metrics"><span class="case-metric">+112% Traffic</span><span class="case-metric">$156 AOV</span></div></div></div></div>
+
+<div class="case"><div class="case-img"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80" alt="Vital Nutrition"><div class="case-overlay"><span class="tag">Health · Subscription</span><h3>Vital Nutrition</h3><p>Supplement brand with personalized vitamin quiz and auto-ship subscription engine.</p><div class="case-metrics"><span class="case-metric">58% Sub Rate</span><span class="case-metric">+140% LTV</span></div></div></div></div>
+</div></section>
 </div>
 
-<!-- ABOUT PAGE -->
+<!-- ABOUT -->
 <div id="page-about" class="page">
-<div style="margin-top:72px;display:grid;grid-template-columns:1fr 1fr;min-height:80vh">
-<div style="padding:80px 64px;display:flex;flex-direction:column;justify-content:center;background:var(--warm)">
-<div class="s-label fly-left d1">Our Story</div>
-<h2 style="font-family:'DM Serif Display',serif;font-size:clamp(32px,4vw,48px);font-weight:400;margin-bottom:20px;line-height:1.15" class="fly-left d2">We believe in objects that earn their place in your home</h2>
-<p style="font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:16px" class="fly-left d3">FORMA was founded in 2021 with a simple conviction: the objects we live with should be made with integrity, designed with purpose, and built to last.</p>
-<p style="font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:16px" class="fly-left d4">We travel to studios across Europe, Japan, and the Americas — meeting makers, understanding processes, and selecting only pieces that meet our standards for craft, material, and design.</p>
-<p style="font-size:15px;color:var(--muted);line-height:1.8" class="fly-left d5">Every object in our collection has been held, tested, and approved by our team before it reaches yours.</p>
-</div>
-<div style="overflow:hidden" class="fly-right d2"><img src="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=800&q=80" style="width:100%;height:100%;object-fit:cover"></div>
-</div>
-<div style="padding:80px 48px;max-width:1400px;margin:0 auto">
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:48px;text-align:center;margin-bottom:80px">
-<div class="fly-up d2"><div style="font-family:'DM Serif Display',serif;font-size:48px;color:var(--accent);margin-bottom:8px">460+</div><div style="font-size:14px;color:var(--muted)">Curated objects</div></div>
-<div class="fly-up d3"><div style="font-family:'DM Serif Display',serif;font-size:48px;color:var(--accent);margin-bottom:8px">38</div><div style="font-size:14px;color:var(--muted)">Partner studios</div></div>
-<div class="fly-up d4"><div style="font-family:'DM Serif Display',serif;font-size:48px;color:var(--accent);margin-bottom:8px">12</div><div style="font-size:14px;color:var(--muted)">Countries</div></div>
-</div>
-<div style="text-align:center;max-width:600px;margin:0 auto">
-<div class="s-label fly-up d1" style="justify-content:center;display:flex">Values</div>
-<h3 style="font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;margin-bottom:32px" class="fly-up d2">What guides us</h3>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;text-align:left">
-<div class="fly-left d2"><h4 style="font-size:14px;font-weight:600;margin-bottom:6px">Craft over mass</h4><p style="font-size:13px;color:var(--muted);line-height:1.7">We choose makers who work with their hands, not assembly lines.</p></div>
-<div class="fly-right d2"><h4 style="font-size:14px;font-weight:600;margin-bottom:6px">Material integrity</h4><p style="font-size:13px;color:var(--muted);line-height:1.7">Real wood, real stone, real ceramic. No imitations.</p></div>
-<div class="fly-left d3"><h4 style="font-size:14px;font-weight:600;margin-bottom:6px">Timeless design</h4><p style="font-size:13px;color:var(--muted);line-height:1.7">We select pieces that won't feel dated in 5, 10, or 20 years.</p></div>
-<div class="fly-right d3"><h4 style="font-size:14px;font-weight:600;margin-bottom:6px">Sustainability</h4><p style="font-size:13px;color:var(--muted);line-height:1.7">Responsibly sourced materials. Zero-waste packaging.</p></div>
-</div>
-</div>
-</div>
+<section class="section" style="padding-top:140px">
+<div class="s-label"><span class="s-label-line"></span>About</div>
+<h2 class="s-title">A small team obsessed<br>with eCommerce growth</h2>
+<p class="s-desc">Founded in 2020, we've helped 150+ brands generate over $40M in combined revenue. Designers, developers, and strategists who live and breathe Shopify.</p>
+<div class="team-row">
+<div class="team-member"><div class="team-photo"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&q=80" alt="Alex"></div><div class="team-text"><h3>Alex Rivera</h3><p>Founder & Creative Director</p><div class="team-social"><a href="#">Dribbble</a><a href="#">LinkedIn</a></div></div></div>
+<div class="team-member"><div class="team-photo"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&q=80" alt="Sarah"></div><div class="team-text"><h3>Sarah Kim</h3><p>Lead Designer</p><div class="team-social"><a href="#">Dribbble</a><a href="#">LinkedIn</a></div></div></div>
+<div class="team-member"><div class="team-photo"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=500&q=80" alt="Marcus"></div><div class="team-text"><h3>Marcus Lee</h3><p>Senior Developer</p><div class="team-social"><a href="#">GitHub</a><a href="#">LinkedIn</a></div></div></div>
+<div class="team-member"><div class="team-photo"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=500&q=80" alt="Priya"></div><div class="team-text"><h3>Priya Patel</h3><p>Growth Strategist</p><div class="team-social"><a href="#">Twitter</a><a href="#">LinkedIn</a></div></div></div>
+</div></section>
+<section class="section" style="padding-top:20px">
+<div class="s-label"><span class="s-label-line"></span>FAQ</div>
+<h2 class="s-title">Common questions</h2>
+<div class="faq-list">
+<div class="faq" onclick="this.classList.toggle('open')"><div class="faq-q">How long does a typical project take?<span class="faq-arrow">+</span></div><div class="faq-a">Most projects take 3-6 weeks. Landing page sprints deliver in 5 business days.</div></div>
+<div class="faq" onclick="this.classList.toggle('open')"><div class="faq-q">Do you only work with Shopify?<span class="faq-arrow">+</span></div><div class="faq-a">We specialize in Shopify and Shopify Plus, but also build on Hydrogen and custom React storefronts.</div></div>
+<div class="faq" onclick="this.classList.toggle('open')"><div class="faq-q">What results can I expect?<span class="faq-arrow">+</span></div><div class="faq-a">Average: 40-80% increase in CVR and 25-50% increase in AOV within 90 days post-launch.</div></div>
+<div class="faq" onclick="this.classList.toggle('open')"><div class="faq-q">Do you offer ongoing support?<span class="faq-arrow">+</span></div><div class="faq-a">Yes — Growth and Enterprise plans include post-launch support. We also offer monthly retainers.</div></div>
+</div></section>
 </div>
 
-<!-- FOOTER -->
-<footer>
-<div class="footer-grid">
-<div>
-<div class="footer-logo"><div class="footer-logo-mark">F</div><div class="footer-logo-text">FORMA</div></div>
-<p class="footer-desc">Curated home objects from independent makers worldwide. Beautiful living, thoughtfully sourced.</p>
+<!-- PRICING -->
+<div id="page-pricing" class="page">
+<section class="section" style="padding-top:140px">
+<div class="s-label"><span class="s-label-line"></span>Investment</div>
+<h2 class="s-title">Transparent pricing</h2>
+<p class="s-desc">Every project includes strategy, design, development, and QA.</p>
+<div class="pricing-grid">
+<div class="price-col"><div class="price-tier">Starter</div><div class="price-amt">$5,000</div><div class="price-per">One-time</div><ul class="price-features"><li>Custom Shopify theme</li><li>Mobile-responsive</li><li>5 page templates</li><li>Basic SEO</li><li>2 revision rounds</li><li>2-week delivery</li></ul><a onclick="showPage('contact')" class="price-btn secondary">Get Started</a></div>
+<div class="price-col featured"><div class="price-tier">Growth</div><div class="price-amt">$12,000</div><div class="price-per">One-time + 30 days</div><ul class="price-features"><li>Everything in Starter</li><li>CRO audit + implementation</li><li>Custom app integrations</li><li>Email template design</li><li>Performance optimization</li><li>4-week delivery</li></ul><a onclick="showPage('contact')" class="price-btn primary">Book a Call</a></div>
+<div class="price-col"><div class="price-tier">Enterprise</div><div class="price-amt">Custom</div><div class="price-per">Tailored scope</div><ul class="price-features"><li>Everything in Growth</li><li>Headless / Hydrogen</li><li>Dedicated PM</li><li>Custom integrations</li><li>Ongoing retainer</li><li>Priority support</li></ul><a onclick="showPage('contact')" class="price-btn secondary">Let's Talk</a></div>
+</div></section>
 </div>
-<div class="ft-col"><h4>Shop</h4><a href="#">New Arrivals</a><a href="#">Collections</a><a href="#">Makers</a><a href="#">Sale</a></div>
-<div class="ft-col"><h4>About</h4><a href="#">Our Story</a><a href="#">Journal</a><a href="#">Sustainability</a><a href="#">Press</a></div>
-<div class="ft-col"><h4>Help</h4><a href="#">Shipping</a><a href="#">Returns</a><a href="#">Contact</a><a href="#">FAQ</a></div>
-</div>
-<div class="footer-bottom"><span>&copy; 2026 FORMA. All rights reserved.</span><span>Made with care</span></div>
-</footer>
 
-<script>
+<!-- CONTACT -->
+<div id="page-contact" class="page">
+<section class="section" style="padding-top:140px">
+<div class="s-label"><span class="s-label-line"></span>Contact</div>
+<h2 class="s-title">Let's build something great</h2>
+<div class="contact-split">
+<div class="contact-left">
+<h3>Start with a free strategy call</h3>
+<p>30 minutes to discuss your project, goals, and how we can help scale your brand. No commitment.</p>
+<div class="contact-detail"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ef878a838380af8e9f8a978b8688869b8e83c18c80">[email&#160;protected]</a></div>
+<div class="contact-detail"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Response within 24 hours</div>
+</div>
+<div class="contact-right">
+<div class="form-row"><div class="form-group"><label>Name</label><input type="text" placeholder="Your name"></div><div class="form-group"><label>Email</label><input type="email" placeholder="you@company.com"></div></div>
+<div class="form-group"><label>Website</label><input type="text" placeholder="https://yourstore.com"></div>
+<div class="form-group"><label>Budget Range</label><select><option>$5K - $10K</option><option>$10K - $20K</option><option>$20K - $50K</option><option>$50K+</option></select></div>
+<div class="form-group"><label>Tell us about your project</label><textarea placeholder="Goals, timeline, challenges..."></textarea></div>
+<button class="form-submit">Send Message →</button>
+</div>
+</div></section>
+</div>
+
+<footer><div class="ft-inner"><div class="ft-top">
+<div><div class="ft-brand">APEX DIGITAL</div><p class="ft-desc">Full-service Shopify agency helping eCommerce brands scale through conversion-focused design.</p></div>
+<div class="ft-col"><h4>Company</h4><a onclick="showPage('about')">About</a><a onclick="showPage('work')">Work</a><a href="#">Blog</a><a href="#">Careers</a></div>
+<div class="ft-col"><h4>Services</h4><a onclick="showPage('services')">Store Design</a><a onclick="showPage('services')">CRO</a><a onclick="showPage('services')">Development</a><a onclick="showPage('services')">Email</a></div>
+<div class="ft-col"><h4>Connect</h4><a href="#">Twitter/X</a><a href="#">Dribbble</a><a href="#">LinkedIn</a><a href="#">Instagram</a></div>
+</div><div class="ft-bot"><span>© 2026 APEX DIGITAL</span><span>SHOPIFY PARTNER</span></div></div></footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Page navigation
-function showPage(p){
-document.querySelectorAll('.page').forEach(x=>{
-x.classList.remove('active');
-x.querySelectorAll('.shown').forEach(el=>el.classList.remove('shown'));
-});
-const page=document.getElementById('page-'+p);
-page.classList.add('active');
-document.querySelectorAll('.nav-links a').forEach(a=>{a.classList.remove('active');if(a.dataset.page===p)a.classList.add('active')});
-window.scrollTo({top:0});
-// Stagger fly-in elements after page is visible
-setTimeout(()=>{
-const flyEls=page.querySelectorAll('[class*="fly-"]');
-flyEls.forEach((el,i)=>{
-const d=el.classList.contains('d1')?150:el.classList.contains('d2')?300:el.classList.contains('d3')?450:el.classList.contains('d4')?600:el.classList.contains('d5')?750:i*120;
-setTimeout(()=>el.classList.add('shown'),d);
-});
-},100);
-// Apply scroll reveal for below-fold content
-setTimeout(()=>{applyReveal(page)},200);
-}
-function applyReveal(container){
-const sels='[style*="border-radius:8px"],[style*="border-radius:50%"],[style*="border-bottom:1px"],[style*="overflow:hidden;border-radius"],h2,h3,.s-label,.s-title,.feat-item,.editorial,.newsletter';
-container.querySelectorAll(sels).forEach((el,i)=>{
-if(el.closest('.pdp-overlay')||el.closest('nav'))return;
-if(!el.dataset.rv){
-el.style.opacity='0';
-const dir=i%3===0?'translateY(28px)':i%3===1?'translateX(-20px)':'translateX(20px)';
-el.style.transform=dir;
-el.style.transition='all 1s cubic-bezier(.23,1,.32,1)';
-el.dataset.rv='1';
-const delay=Math.min(i,6)*100;
-setTimeout(()=>{obs.observe(el)},delay);
-}
-});
-}
+function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');document.querySelectorAll('.nav-links a').forEach(a=>{a.classList.remove('active');if(a.dataset.page===p)a.classList.add('active')});window.scrollTo({top:0,behavior:'smooth'})}
 
-// Product data
-const products={
-'arc-chair':{brand:'Studio Aura',name:'Arc Lounge Chair',price:'€1,240',hero:'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1400&q=80',side:'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=700&q=80',parallax:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1400&q=80',desc:'The Arc Lounge Chair is where minimalism meets deep comfort. Its curved silhouette cradles the body while maintaining a visual lightness that lets it breathe in any space. Made by hand in a small studio in Copenhagen.',desc2:'Each chair takes three weeks to produce. The frame is solid ash, steam-bent into its signature arc. The cushion is high-resilience foam wrapped in down.',specs:[['Dimensions','W 78 × D 82 × H 74 cm'],['Frame','Solid ash, steam-bent'],['Upholstery','Bouclé (100% wool)'],['Weight','14.5 kg'],['Lead Time','3–4 weeks'],['Origin','Copenhagen, Denmark']],details:[{img:'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=700&q=80',label:'Material',title:'Solid ash, steam-bent by hand',text:'Each frame begins as a single piece of sustainably harvested ash, steamed for six hours, then carefully bent into the signature arc curve.'},{img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&q=80',label:'Comfort',title:'High-resilience foam wrapped in down',text:'The cushion combines support of high-density foam with softness of natural down wrap. The bouclé wool develops a gentle patina over time.'},{img:'https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=700&q=80',label:'Process',title:'Three weeks, one pair of hands',text:'From raw timber to finished chair, each Arc is made by a single craftsperson. No assembly lines, no shortcuts.'}]},
-'vase-7':{brand:'Atelier Terre',name:'Sculptural Vase No.7',price:'€185',hero:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=1400&q=80',side:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=700&q=80',parallax:'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1400&q=80',desc:'Hand-thrown and sculpted in our Lisbon studio, each Vase No.7 is a one-of-a-kind piece. The organic form is inspired by coastal erosion patterns, with a matte glaze that shifts in different light.',desc2:'Made from local Portuguese stoneware clay, fired at 1280°C for maximum durability. Food-safe and waterproof.',specs:[['Dimensions','H 32 × Ø 18 cm'],['Material','Portuguese stoneware'],['Glaze','Matte mineral'],['Weight','1.8 kg'],['Each piece','Unique'],['Origin','Lisbon, Portugal']],details:[{img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=700&q=80',label:'Material',title:'Portuguese stoneware clay',text:'Sourced from local quarries near Lisbon. The clay body fires to a warm grey tone with subtle natural variations in each piece.'},{img:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=700&q=80',label:'Form',title:'Inspired by coastal erosion',text:'The undulating walls reference the sea-carved cliffs of the Algarve coast. Each vase is hand-sculpted, making every piece unique.'},{img:'https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=700&q=80',label:'Glaze',title:'Mineral matte finish',text:'A custom glaze recipe using local minerals creates a surface that shifts between warm grey and soft blue depending on the light.'}]},
-'orb-pendant':{brand:'Lumen Works',name:'Orb Pendant Light',price:'€420',hero:'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=1400&q=80',side:'https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=700&q=80',parallax:'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1400&q=80',desc:'The Orb Pendant casts a warm, diffused glow through its hand-blown glass shade. Suspended from a minimal brass fitting, it brings sculptural presence to any space.',desc2:'Compatible with standard E27 bulbs. Includes 2m adjustable cord and ceiling plate. Dimmable with compatible bulbs.',specs:[['Dimensions','Ø 30 × H 28 cm'],['Shade','Hand-blown glass'],['Fitting','Solid brass'],['Cord','2m adjustable, fabric'],['Bulb','E27 (not included)'],['Origin','Milan, Italy']],details:[{img:'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=700&q=80',label:'Glass',title:'Hand-blown in Murano',text:'Each shade is individually mouth-blown by master glassmakers, creating subtle variations in thickness that produce a beautiful uneven glow.'},{img:'https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=700&q=80',label:'Light',title:'Warm, diffused ambiance',text:'The frosted interior surface diffuses light evenly, eliminating harsh shadows while maintaining enough transparency to see the bulb silhouette.'},{img:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=700&q=80',label:'Detail',title:'Solid brass fitting',text:'The minimal canopy and socket are machined from solid brass, developing a rich patina over time. No plastic components.'}]},
-'planter':{brand:'Verde Studio',name:'Ribbed Planter',price:'€95',hero:'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=1400&q=80',side:'https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=700&q=80',parallax:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&q=80',desc:'A modern planter with organic ribbed texture, designed to bring the outdoors in. The drainage system keeps plants healthy while protecting surfaces.',desc2:'Suitable for indoor use. Includes removable drainage tray. Available in natural and charcoal finishes.',specs:[['Dimensions','Ø 22 × H 20 cm'],['Material','Concrete composite'],['Finish','Natural / Charcoal'],['Weight','2.4 kg'],['Drainage','Built-in with tray'],['Origin','Brooklyn, USA']],details:[{img:'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=700&q=80',label:'Texture',title:'Hand-cast ribbed surface',text:'Each planter is cast in a custom silicone mold, creating the signature ribbed pattern. Minor variations make each piece unique.'},{img:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=80',label:'Function',title:'Built-in drainage system',text:'A hidden drainage layer and removable tray keep roots healthy without water stains on your furniture.'},{img:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=700&q=80',label:'Material',title:'Lightweight concrete composite',text:'A proprietary blend that looks and feels like concrete but weighs 60% less. Frost-resistant for outdoor use.'}]},
-'wave-sofa':{brand:'Nōrd Design',name:'Wave Sofa',price:'€3,800',hero:'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=1400&q=80',side:'https://images.unsplash.com/photo-1550226891-ef816aed4a98?w=700&q=80',parallax:'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=1400&q=80',desc:'The Wave Sofa redefines what a sofa can be — sculptural enough to anchor a room, comfortable enough to fall asleep on. Its flowing lines were inspired by Nordic coastal landscapes.',desc2:'Modular design allows for L-shape or straight configurations. All cushion covers are removable and dry-cleanable.',specs:[['Dimensions','W 240 × D 95 × H 72 cm'],['Frame','Solid beech, reinforced'],['Cushions','Multi-layer foam + feather'],['Cover','Performance linen blend'],['Configuration','Modular (2-5 seats)'],['Origin','Stockholm, Sweden']],details:[{img:'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=80',label:'Design',title:'Inspired by Nordic coastlines',text:'The flowing silhouette references the rolling dunes and soft contours of the Scandinavian shore.'},{img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&q=80',label:'Comfort',title:'Multi-layer cushion system',text:'High-resilience foam base, soft foam middle, and feather-down topper create a sink-in comfort that retains its shape.'},{img:'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=700&q=80',label:'Build',title:'Solid beech frame, built to last',text:'Kiln-dried beech wood frame with reinforced joints. Designed for 20+ years of daily use.'}]},
-'tea-set':{brand:'Kintsugi Lab',name:'Tea Set — Gold Repair',price:'€340',hero:'https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=1400&q=80',side:'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=700&q=80',parallax:'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c0?w=1400&q=80',desc:'Inspired by the Japanese art of kintsugi, this tea set celebrates imperfection. Gold-traced seams highlight the beauty of repair, making each set a meditation on resilience.',desc2:'Includes teapot, two cups, and a serving tray. Microwave safe (excluding gold elements). Hand wash recommended.',specs:[['Set includes','Teapot + 2 cups + tray'],['Material','Porcelain with 24K gold'],['Teapot capacity','450ml'],['Cup capacity','180ml'],['Care','Hand wash'],['Origin','Kyoto, Japan']],details:[{img:'https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=700&q=80',label:'Craft',title:'24-karat gold lacquer repair',text:'Real gold is applied by hand using traditional urushi lacquer techniques passed down through generations of Japanese artisans.'},{img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=700&q=80',label:'Philosophy',title:'Beauty in imperfection',text:'Each piece is intentionally fractured and repaired, embodying the wabi-sabi principle that broken things are more beautiful for having been broken.'},{img:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=700&q=80',label:'Material',title:'Fine Kyoto porcelain',text:'Thin-walled porcelain thrown on traditional kick wheels. The translucent body glows when held to light.'}]},
-'mirror':{brand:'Reflect Co.',name:'Asymmetric Mirror',price:'€560',hero:'https://images.unsplash.com/photo-1618220179428-22790b461013?w=1400&q=80',side:'https://images.unsplash.com/photo-1616627577385-5c0c2d8a3d77?w=700&q=80',parallax:'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=1400&q=80',desc:'An organic, free-form mirror that transforms walls into art. The asymmetric silhouette catches light differently throughout the day, creating ever-changing reflections.',desc2:'Includes wall-mounting hardware for both drywall and masonry. Can be hung vertically or horizontally.',specs:[['Dimensions','W 60 × H 90 cm'],['Glass','6mm beveled edge'],['Frame','Powder-coated steel'],['Weight','8.2 kg'],['Mounting','Wall hardware included'],['Origin','Berlin, Germany']],details:[{img:'https://images.unsplash.com/photo-1618220179428-22790b461013?w=700&q=80',label:'Form',title:'Organic, free-form silhouette',text:'The shape was developed through a process of hand-drawing and digital refinement, achieving a form that feels natural yet intentional.'},{img:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=700&q=80',label:'Light',title:'Plays with natural light',text:'The irregular edges catch sunlight at varying angles, casting soft highlights across the wall throughout the day.'},{img:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=80',label:'Quality',title:'Beveled edge, distortion-free',text:'6mm float glass with a precision-cut bevel. Copper-free backing for long-term clarity without black spots.'}]},
-'candle-holder':{brand:'Cera Studio',name:'Column Candle Holder',price:'€78',hero:'https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=1400&q=80',side:'https://images.unsplash.com/photo-1603204077779-bed963ea7d0e?w=700&q=80',parallax:'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1400&q=80',desc:'An architectural candle holder that elevates the simplest taper candle into a sculptural statement. The column form references classical architecture while the material keeps it firmly modern.',desc2:'Fits standard 2.2cm taper candles. Protective felt base included. Wax drips can be removed with warm water.',specs:[['Dimensions','Ø 8 × H 24 cm'],['Material','Cast concrete'],['Finish','Smooth, sealed'],['Candle size','Standard taper (2.2cm)'],['Weight','1.2 kg'],['Origin','Athens, Greece']],details:[{img:'https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=700&q=80',label:'Form',title:'Classical column, modern material',text:'The fluted column shape is a direct reference to ancient Greek architecture, reinterpreted in raw concrete for contemporary spaces.'},{img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=700&q=80',label:'Surface',title:'Sealed for everyday use',text:'A food-grade sealant protects the concrete from stains and makes wax removal effortless. Simply rinse with warm water.'},{img:'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=700&q=80',label:'Craft',title:'Hand-cast in small batches',text:'Each holder is individually cast and hand-finished in our Athens studio. Natural variations in color and texture make every piece unique.'}]}
-};
+// Testimonial carousel - 5 slides
+let currentSlide=0;const totalSlides=5;
+function showSlide(n){currentSlide=n;document.querySelectorAll('.testi-slide').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.testi-dot').forEach(d=>d.classList.remove('active'));document.querySelectorAll('.testi-slide')[n].classList.add('active');document.querySelectorAll('.testi-dot')[n].classList.add('active')}
+function nextSlide(){showSlide((currentSlide+1)%totalSlides)}
+function prevSlide(){showSlide((currentSlide-1+totalSlides)%totalSlides)}
+setInterval(nextSlide,6000);
 
-// Show product detail page
-function showProduct(id){
-const p=products[id];if(!p)return;
-const pdp=document.getElementById('pdp-overlay');
-document.getElementById('pdp-hero-img').src=p.hero;
-document.getElementById('pdp-brand').textContent=p.brand;
-document.getElementById('pdp-name').innerHTML=p.name.replace(' ',`<br>`);
-document.getElementById('pdp-price').textContent=p.price;
-document.getElementById('pdp-desc').textContent=p.desc;
-document.getElementById('pdp-desc2').textContent=p.desc2;
-document.getElementById('pdp-side-img').src=p.side;
-document.getElementById('pdp-btn-price').textContent='Add to Cart — '+p.price;
-document.getElementById('pdp-parallax-img').src=p.parallax;
-// Specs
-let specHtml='';p.specs.forEach(s=>{specHtml+=`<div class="spec-row"><span class="spec-label">${s[0]}</span><span class="spec-value">${s[1]}</span></div>`;});
-document.getElementById('pdp-specs-list').innerHTML=specHtml;
-// Details
-const detailsEl=document.getElementById('pdp-details-list');
-let dHtml='';p.details.forEach((d,i)=>{
-const rev=i%2===1?'reverse':'';
-dHtml+=`<div class="detail-row ${rev}"><div class="detail-img"><img src="${d.img}" alt="${d.label}"></div><div class="detail-text"><h3>${d.label}</h3><h4>${d.title}</h4><p>${d.text}</p></div></div>`;
+// Custom cursor + mouse glow
+const cursor=document.querySelector('.cursor'),dot=document.querySelector('.cursor-dot'),glow=document.querySelector('.mouse-glow');
+let mx=0,my=0,cx=0,cy=0,gx=0,gy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';glow.classList.add('visible')});
+document.addEventListener('mouseleave',()=>{glow.classList.remove('visible')});
+function animateCursor(){cx+=(mx-cx)*.12;cy+=(my-cy)*.12;cursor.style.left=cx+'px';cursor.style.top=cy+'px';gx+=(mx-gx)*.06;gy+=(my-gy)*.06;glow.style.left=gx+'px';glow.style.top=gy+'px';requestAnimationFrame(animateCursor)}
+animateCursor();
+document.querySelectorAll('a,button,.btn-main,.btn-ghost,.btn-line,.case,.team-member,.faq,.price-btn,.srv-item,.p-step,.form-submit,.testi-arrow').forEach(el=>{el.addEventListener('mouseenter',()=>cursor.classList.add('hover'));el.addEventListener('mouseleave',()=>cursor.classList.remove('hover'))});
+
+// Mouse glow on service cards
+const srvColors=['rgba(99,102,241,.08)','rgba(129,140,248,.08)','rgba(124,58,237,.08)','rgba(79,70,229,.08)','rgba(167,139,250,.08)','rgba(139,92,246,.08)'];
+document.querySelectorAll('.srv-item').forEach((card,i)=>{
+card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const x=e.clientX-r.left;const y=e.clientY-r.top;card.style.background='radial-gradient(300px circle at '+x+'px '+y+'px,'+srvColors[i%6]+',transparent 60%)'});
+card.addEventListener('mouseleave',()=>{card.style.background='rgba(255,255,255,.01)'});
 });
-detailsEl.innerHTML=dHtml;
-pdp.style.display='block';
-requestAnimationFrame(()=>{pdp.classList.add('active');});
-document.body.style.overflow='hidden';
-window._pdpScroll=window.scrollY;
-pdp.scrollTop=0;
+
+// Scroll animations
+const obs=new IntersectionObserver(e=>{e.forEach(n=>{if(n.isIntersecting){n.target.style.opacity='1';n.target.style.transform='translateY(0)'}})},{threshold:.06});
+document.querySelectorAll('.srv-item,.case,.p-step,.t-card,.price-col,.team-member,.faq,.contact-detail').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='all .6s cubic-bezier(.16,1,.3,1)';obs.observe(el)});
+
+// Scroll-driven process section (Apple-style)
+const processData=[
+{step:'01',title:'Discovery',desc:'We deep-dive into your brand, audience, competitors, and business goals. Research, interviews, and competitive analysis — we learn everything before touching a single pixel.',img:'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=80'},
+{step:'02',title:'Strategy',desc:'Sitemap, user flows, wireframes, and conversion architecture. Every design decision is backed by data, user psychology, and clear business intention. Nothing is arbitrary.',img:'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=1200&q=80'},
+{step:'03',title:'Design & Build',desc:'Pixel-perfect Figma mockups, then clean Shopify development. Daily Slack updates, weekly video reviews. You see progress every step of the way.',img:'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&q=80'},
+{step:'04',title:'Launch & Optimize',desc:'QA across all devices, smooth launch, and 30 days of post-launch CRO optimization. We monitor analytics daily to ensure metrics are trending up.',img:'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80'}
+];
+const scrollProc=document.querySelector('.scroll-process');
+if(scrollProc){
+// Set initial background image immediately
+document.getElementById('processBg').style.backgroundImage='url('+processData[0].img+')';
+document.getElementById('processBg').style.opacity='1';
+window.addEventListener('scroll',()=>{
+const rect=scrollProc.getBoundingClientRect();
+const h=scrollProc.offsetHeight;
+const progress=Math.max(0,Math.min(1,(-rect.top)/(h-window.innerHeight)));
+const idx=Math.min(3,Math.floor(progress*4));
+const d=processData[idx];
+const stepEl=document.getElementById('processStep');
+const titleEl=document.getElementById('processTitle');
+const descEl=document.getElementById('processDesc');
+const bgEl=document.getElementById('processBg');
+const fillEl=document.getElementById('processFill');
+if(stepEl&&d){
+if(stepEl.textContent!==d.step){
+stepEl.textContent=d.step;
+titleEl.style.opacity='0';titleEl.style.transform='translateY(20px)';
+descEl.style.opacity='0';
+bgEl.style.opacity='0';
+setTimeout(()=>{titleEl.textContent=d.title;descEl.textContent=d.desc;bgEl.style.backgroundImage='url('+d.img+')';titleEl.style.opacity='1';titleEl.style.transform='translateY(0)';descEl.style.opacity='1';bgEl.style.opacity='1';},300);
 }
-function closeProduct(){
-const pdp=document.getElementById('pdp-overlay');
-pdp.classList.remove('active');
-setTimeout(()=>{pdp.style.display='none';document.body.style.overflow='';},400);
+fillEl.style.width=((idx+1)*25)+'%';
+}
+});
 }
 
-// Filter
-document.querySelectorAll('.filter-btn').forEach(b=>{b.addEventListener('click',()=>{
-document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
-b.classList.add('active');
-const filter=b.dataset.filter;
-document.querySelectorAll('.product-card').forEach(card=>{
-if(filter==='all'||card.dataset.cat===filter){card.classList.remove('hidden');card.style.opacity='0';card.style.transform='translateY(16px)';setTimeout(()=>{card.style.opacity='1';card.style.transform='translateY(0)'},50)}
-else{card.classList.add('hidden')}
-});
-});});
-
-// Scroll reveal - smooth & slow
-const obs=new IntersectionObserver(entries=>{
-entries.forEach((n,i)=>{if(n.isIntersecting){
-const delay=n.target.dataset.sd||0;
-setTimeout(()=>{n.target.style.opacity='1';n.target.style.transform='translate(0,0) scale(1)'},delay*1);
-obs.unobserve(n.target);
-}})},{threshold:.12,rootMargin:'0px 0px -60px 0px'});
-
-// Apply to all content elements with varied directions
-document.querySelectorAll('.product-card,.cat-card,.feat-item,.s-label,.s-title,.hero-tag,.editorial,.newsletter,.editorial-link').forEach((el,i)=>{
-el.style.opacity='0';
-el.style.transform='translateY(30px)';
-el.style.transition='all 1s cubic-bezier(.23,1,.32,1)';
-el.dataset.sd=Math.min(i%4,3)*100;
-obs.observe(el);
-});
-
-// Product cards get staggered + slight horizontal offset
-document.querySelectorAll('.product-card').forEach((el,i)=>{
-const dir=i%2===0?-15:15;
-el.style.transform='translate('+dir+'px,30px)';
-el.style.transition='all 1.1s cubic-bezier(.23,1,.32,1)';
-el.dataset.sd=i%4*120;
-});
-
-// Cat cards get scale effect
-document.querySelectorAll('.cat-card').forEach((el,i)=>{
-el.style.transform='translateY(20px) scale(.97)';
-el.style.transition='all 1.2s cubic-bezier(.23,1,.32,1)';
-el.dataset.sd=i*150;
-});
-
-// Feature items fly from different directions
-document.querySelectorAll('.feat-item').forEach((el,i)=>{
-el.style.transform='translateY(25px)';
-el.style.transition='all 1s cubic-bezier(.23,1,.32,1)';
-el.dataset.sd=i*120;
-});
-
-// Trigger initial shop page fly-ins on load
-window.addEventListener('load',()=>{
-const shop=document.getElementById('page-shop');
-const flyEls=shop.querySelectorAll('[class*="fly-"]');
-flyEls.forEach((el,i)=>{
-const d=el.classList.contains('d1')?150:el.classList.contains('d2')?300:el.classList.contains('d3')?450:el.classList.contains('d4')?600:el.classList.contains('d5')?750:i*120;
-setTimeout(()=>el.classList.add('shown'),d+200);
-});
-});
+// Hide default cursor
+if(window.matchMedia('(pointer:fine)').matches){document.body.style.cursor='none';document.querySelectorAll('a,button,input,textarea,select').forEach(el=>el.style.cursor='none')}
 </script>
-<!-- PRODUCT DETAIL OVERLAY -->
-<div id="pdp-overlay" class="pdp-overlay">
-<div class="pdp-close" onclick="closeProduct()">
-<span class="pdp-close-text">← Back to Shop</span>
-</div>
-<div class="pdp-hero-full"><img id="pdp-hero-img" src="" alt="Product"><div class="pdp-hero-overlay"></div><div class="pdp-hero-content"><div id="pdp-brand" class="pdp-hero-brand"></div><div id="pdp-name" class="pdp-hero-title"></div><div id="pdp-price" class="pdp-hero-price"></div></div></div>
-<div class="pdp-info-section">
-<div class="pdp-text-col"><h2 id="pdp-desc" class="pdp-main-desc"></h2><p id="pdp-desc2" class="pdp-sub-desc"></p>
-<div class="pdp-specs-wrap"><h3>Specifications</h3><div id="pdp-specs-list"></div></div>
-<div class="pdp-actions"><button id="pdp-btn-price" class="btn-add"></button><button class="btn-wish">♡</button></div>
-</div>
-<div class="pdp-img-col"><img id="pdp-side-img" src="" alt="Side view"></div>
-</div>
-<div class="pdp-parallax-section"><img id="pdp-parallax-img" src="" alt="Context"><div class="pdp-par-overlay"></div><div class="pdp-par-text"><h3>Designed to last a lifetime</h3><p>Sustainably sourced materials. Expert craftsmanship. Built for decades, not seasons.</p></div></div>
-<div class="pdp-details-section"><h2>Crafted with intention</h2><div id="pdp-details-list"></div></div>
-</div>
-
 </body>
 </html>
