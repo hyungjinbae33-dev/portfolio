@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORMA — Curated Home Objects</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ec;--fg:#1a1816;--accent:#8b6914;--accent-light:#c4a35a;--muted:#8a8279;--card:#fff;--dark:#1a1816;--border:#e2ddd6;--warm:#ece6db;--sage:#7a8a6e;--terracotta:#b4654a;--slate:#5a6670}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--fg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 48px;backdrop-filter:blur(16px);background:rgba(244,241,236,.9);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;height:72px}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer}
+.nav-logo-mark{width:36px;height:36px;border:2px solid var(--fg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:16px;font-weight:400;color:var(--fg);letter-spacing:1px}
+.nav-logo-text{font-family:'DM Serif Display',serif;font-size:22px;color:var(--fg);letter-spacing:3px}
+.nav-links{display:flex;gap:32px;list-style:none;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;transition:color .3s;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:var(--fg)}
+.page{display:none;opacity:0;transition:opacity .5s}.page.active{display:block;opacity:1}
+.fly-up,.fly-left,.fly-right,.fly-scale,.fly-down{opacity:0;transition:opacity 1s cubic-bezier(.23,1,.32,1),transform 1s cubic-bezier(.23,1,.32,1)}
+.fly-up{transform:translateY(35px)}
+.fly-left{transform:translateX(-40px)}
+.fly-right{transform:translateX(40px)}
+.fly-scale{transform:scale(.92)}
+.fly-down{transform:translateY(-30px)}
+.fly-up.shown,.fly-left.shown,.fly-right.shown,.fly-scale.shown,.fly-down.shown{opacity:1;transform:translate(0,0) scale(1)}
+.nav-icons{display:flex;gap:16px;align-items:center}
+.nav-icon{width:20px;height:20px;stroke:var(--fg);fill:none;stroke-width:1.5;cursor:pointer;transition:stroke .3s}
+.nav-icon:hover{stroke:var(--accent)}
+.cart-count{position:relative}
+.cart-count::after{content:'2';position:absolute;top:-6px;right:-8px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* HERO - EDITORIAL SPLIT */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;margin-top:72px}
+.hero-left{padding:80px 64px;display:flex;flex-direction:column;justify-content:center;background:var(--warm)}
+.hero-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:24px}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(36px,4.5vw,64px);line-height:1.1;font-weight:400;margin-bottom:20px;letter-spacing:-.5px}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-desc{font-size:15px;color:var(--muted);line-height:1.7;max-width:380px;margin-bottom:36px}
+.hero-btns{display:flex;gap:12px}
+.btn-dark{background:var(--fg);color:var(--bg);padding:14px 32px;border-radius:0;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s}
+.btn-dark:hover{background:var(--accent);transform:translateY(-2px)}
+.btn-outline{border:1.5px solid var(--fg);color:var(--fg);padding:14px 32px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s}
+.btn-outline:hover{background:var(--fg);color:var(--bg)}
+.hero-right{position:relative;overflow:hidden}
+.hero-right img{width:100%;height:100%;object-fit:cover}
+
+/* EDITORIAL TICKER */
+.ticker{padding:16px 0;border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap}
+.ticker-track{display:inline-flex;animation:tick 40s linear infinite}
+.ticker-item{font-family:'DM Serif Display',serif;font-size:14px;font-style:italic;color:var(--muted);padding:0 40px;display:flex;align-items:center;gap:16px}
+.ticker-dot{width:4px;height:4px;border-radius:50%;background:var(--accent-light)}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* CATEGORIES - ORGANIC SHAPES */
+.categories{padding:100px 48px;max-width:1400px;margin:0 auto}
+.s-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:16px}
+.s-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,44px);font-weight:400;margin-bottom:48px;letter-spacing:-.3px}
+.cat-grid{display:grid;grid-template-columns:1.4fr .8fr .8fr;grid-template-rows:300px 300px;gap:16px}
+.cat-card{position:relative;overflow:hidden;cursor:pointer;border-radius:4px}
+.cat-card:nth-child(1){grid-row:span 2;border-radius:0 80px 0 0}
+.cat-card:nth-child(2){border-radius:0 0 0 60px}
+.cat-card:nth-child(3){border-radius:60px 0 0 0}
+.cat-card:nth-child(4){grid-column:span 2;border-radius:0 0 80px 0}
+.cat-card img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.cat-card:hover img{transform:scale(1.06)}
+.cat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,22,.6),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:28px}
+.cat-name{font-family:'DM Serif Display',serif;font-size:24px;color:#fff;margin-bottom:4px}
+.cat-count{font-size:11px;color:rgba(255,255,255,.7);font-weight:500;letter-spacing:1px}
+
+/* PRODUCTS - MASONRY STAGGER */
+.products{padding:100px 48px;background:var(--warm)}
+.products-inner{max-width:1400px;margin:0 auto}
+.products-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px}
+.filter-row{display:flex;gap:6px}
+.filter-btn{padding:8px 20px;border:1px solid var(--border);background:transparent;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:all .3s;font-family:inherit;font-weight:500}
+.filter-btn.active,.filter-btn:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;align-items:start}
+.product-card{background:var(--card);overflow:hidden;transition:all .5s;cursor:pointer;position:relative}
+.product-card:nth-child(2),.product-card:nth-child(5),.product-card:nth-child(8){margin-top:48px}
+.product-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,.06)}
+.product-img{width:100%;aspect-ratio:3/4;overflow:hidden;position:relative}
+.product-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.product-card:hover .product-img img{transform:scale(1.05)}
+.product-badge{position:absolute;top:12px;left:12px;padding:4px 12px;background:var(--accent);color:#fff;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.wishlist{position:absolute;top:12px;right:12px;width:32px;height:32px;background:rgba(255,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all .3s;border:none}
+.wishlist:hover{background:var(--accent);color:#fff}
+.product-info{padding:20px}
+.product-brand{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+.product-name{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:8px}
+.product-price{font-size:14px;font-weight:600;color:var(--accent)}
+.product-price .old{text-decoration:line-through;color:var(--muted);font-weight:400;margin-left:6px;font-size:12px}
+.product-card.hidden{display:none}
+
+/* EDITORIAL SECTION */
+.editorial{padding:0;display:grid;grid-template-columns:1fr 1fr;min-height:500px}
+.editorial-img{overflow:hidden;position:relative}
+.editorial-img img{width:100%;height:100%;object-fit:cover}
+.editorial-text{padding:80px 64px;display:flex;flex-direction:column;justify-content:center;background:var(--dark);color:#fff}
+.editorial-text .s-label{color:var(--accent-light)}
+.editorial-text h2{font-family:'DM Serif Display',serif;font-size:36px;font-weight:400;margin-bottom:16px;line-height:1.2}
+.editorial-text p{font-size:15px;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:28px}
+.editorial-link{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent-light);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:gap .3s}
+.editorial-link:hover{gap:14px}
+
+/* FEATURES */
+.features{padding:80px 48px;max-width:1400px;margin:0 auto}
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
+.feat-item{text-align:center}
+.feat-icon{width:48px;height:48px;margin:0 auto 16px;border:1.5px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.feat-icon svg{width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:1.5}
+.feat-item h3{font-size:14px;font-weight:600;margin-bottom:6px;letter-spacing:.5px}
+.feat-item p{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* NEWSLETTER */
+.newsletter{padding:80px 48px;background:var(--dark);color:#fff;text-align:center}
+.newsletter h2{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;margin-bottom:12px}
+.newsletter p{color:rgba(255,255,255,.5);font-size:14px;margin-bottom:32px}
+.nl-form{display:flex;gap:0;max-width:440px;margin:0 auto}
+.nl-form input{flex:1;padding:14px 20px;border:1px solid rgba(255,255,255,.15);border-right:none;background:transparent;color:#fff;font-size:13px;font-family:inherit;outline:none}
+.nl-form input::placeholder{color:rgba(255,255,255,.3)}
+.nl-form button{padding:14px 28px;background:var(--accent-light);color:var(--dark);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:all .3s;font-family:inherit}
+.nl-form button:hover{background:#d4b76a}
+
+/* FOOTER */
+footer{padding:64px 48px;border-top:1px solid var(--border)}
+.footer-grid{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.footer-logo-mark{width:28px;height:28px;border:1.5px solid var(--fg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:12px}
+.footer-logo-text{font-family:'DM Serif Display',serif;font-size:18px;letter-spacing:3px}
+.footer-desc{font-size:13px;color:var(--muted);line-height:1.7}
+.ft-col h4{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-weight:600}
+.ft-col a{display:block;color:var(--fg);text-decoration:none;font-size:13px;margin-bottom:10px;transition:color .3s}
+.ft-col a:hover{color:var(--accent)}
+.footer-bottom{max-width:1400px;margin:32px auto 0;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);display:flex;justify-content:space-between}
+
+/* PRODUCT DETAIL OVERLAY */
+.pdp-overlay{position:fixed;inset:0;z-index:2000;background:var(--bg);overflow-y:auto;display:none;opacity:0;transition:opacity .4s}
+.pdp-overlay.active{opacity:1}
+.pdp-close{position:fixed;top:20px;left:48px;z-index:2100;cursor:pointer}
+.pdp-close-text{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);transition:color .3s;background:rgba(244,241,236,.85);backdrop-filter:blur(8px);padding:10px 20px;border:1px solid var(--border)}
+.pdp-close:hover .pdp-close-text{color:var(--fg)}
+.pdp-hero-full{height:85vh;position:relative;overflow:hidden}
+.pdp-hero-full img{width:100%;height:100%;object-fit:cover}
+.pdp-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(244,241,236,.95))}
+.pdp-hero-content{position:absolute;bottom:60px;left:80px;z-index:2}
+.pdp-hero-brand{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+.pdp-hero-title{font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,64px);font-weight:400;line-height:1.05;margin-bottom:12px}
+.pdp-hero-price{font-size:22px;font-weight:600;color:var(--accent)}
+.pdp-info-section{padding:80px;max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.pdp-text-col{}
+.pdp-main-desc{font-family:'DM Serif Display',serif;font-size:24px;font-weight:400;line-height:1.4;margin-bottom:16px}
+.pdp-sub-desc{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:32px}
+.pdp-specs-wrap h3{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:16px}
+.pdp-actions{margin-top:32px;display:flex;gap:12px}
+.btn-add{background:var(--fg);color:var(--bg);padding:16px 36px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:all .3s;font-family:inherit}
+.btn-add:hover{background:var(--accent)}
+.btn-wish{width:52px;height:52px;border:1.5px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;transition:all .3s}
+.btn-wish:hover{border-color:var(--accent);color:var(--accent)}
+.spec-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.spec-label{color:var(--muted)}
+.spec-value{font-weight:500}
+.pdp-img-col{position:sticky;top:100px}
+.pdp-img-col img{width:100%;border-radius:4px}
+.pdp-parallax-section{height:60vh;position:relative;overflow:hidden}
+.pdp-parallax-section img{width:100%;height:120%;object-fit:cover;position:absolute;top:-10%}
+.pdp-par-overlay{position:absolute;inset:0;background:rgba(26,24,22,.35)}
+.pdp-par-text{position:absolute;bottom:48px;left:80px;z-index:2;color:#fff;max-width:440px}
+.pdp-par-text h3{font-family:'DM Serif Display',serif;font-size:24px;font-weight:400;margin-bottom:8px}
+.pdp-par-text p{font-size:13px;color:rgba(255,255,255,.7);line-height:1.7}
+.pdp-details-section{padding:80px;max-width:1400px;margin:0 auto}
+.pdp-details-section h2{font-family:'DM Serif Display',serif;font-size:32px;font-weight:400;margin-bottom:48px;text-align:center}
+.detail-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;align-items:center}
+.detail-row.reverse{direction:rtl}.detail-row.reverse>*{direction:ltr}
+.detail-img{overflow:hidden;border-radius:4px;aspect-ratio:4/3}
+.detail-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.detail-img:hover img{transform:scale(1.04)}
+.detail-text{padding:40px}
+.detail-text h3{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+.detail-text h4{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;margin-bottom:10px}
+.detail-text p{font-size:14px;color:var(--muted);line-height:1.8}
+
+@media(max-width:900px){
+nav{padding:0 24px}.nav-links{display:none}
+.hero{grid-template-columns:1fr;margin-top:72px}.hero-left{padding:60px 24px}.hero-right{height:50vh}
+.cat-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.cat-card:nth-child(1){grid-row:auto;border-radius:0}.cat-card:nth-child(4){grid-column:auto}
+.categories,.products,.features{padding:60px 24px}
+.product-grid{grid-template-columns:repeat(2,1fr)}.product-card:nth-child(2),.product-card:nth-child(5),.product-card:nth-child(8){margin-top:0}
+.editorial{grid-template-columns:1fr}.editorial-text{padding:48px 24px}.editorial-img{height:300px}
+.feat-grid{grid-template-columns:repeat(2,1fr);gap:24px}
+.newsletter{padding:60px 24px}.nl-form{flex-direction:column}.nl-form input{border-right:1px solid rgba(255,255,255,.15)}
+footer{padding:40px 24px}.footer-grid{grid-template-columns:1fr;gap:24px}
+.pdp-hero-full{height:60vh}.pdp-hero-content{left:24px;bottom:32px}
+.pdp-info-section{padding:40px 24px;grid-template-columns:1fr;gap:32px}.pdp-img-col{position:static}
+.pdp-parallax-section{height:40vh}.pdp-par-text{left:24px;bottom:24px}
+.pdp-details-section{padding:40px 24px}.detail-row,.detail-row.reverse{grid-template-columns:1fr;direction:ltr}.detail-text{padding:16px 0}
+.pdp-close{left:24px}
+}
+</style>
+</head>
+<body>
+<nav><div class="nav-inner">
+<div class="nav-logo" onclick="showPage('shop')">
+<div class="nav-logo-mark">F</div>
+<div class="nav-logo-text">FORMA</div>
+</div>
+<ul class="nav-links">
+<li><a onclick="showPage('shop')" data-page="shop" class="active">Shop</a></li>
+<li><a onclick="showPage('collections')" data-page="collections">Collections</a></li>
+<li><a onclick="showPage('makers')" data-page="makers">Makers</a></li>
+<li><a onclick="showPage('journal')" data-page="journal">Journal</a></li>
+<li><a onclick="showPage('about')" data-page="about">About</a></li>
+</ul>
+<div class="nav-icons">
+<svg class="nav-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+<svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+<span class="cart-count"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>
+</div>
+</div></nav>
+
+<!-- SHOP PAGE -->
+<div id="page-shop" class="page active">
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-left">
+<div class="hero-tag fly-left d1">New Collection — Spring 2026</div>
+<h1 class="fly-left d2">Objects that define <em>beautiful</em> living</h1>
+<p class="hero-desc fly-left d3">Curated home objects from independent makers and studios worldwide. Each piece selected for craft, material integrity, and timeless design.</p>
+<div class="hero-btns fly-up d4"><a onclick="showPage('collections')" class="btn-dark">Shop Collection</a><a onclick="showPage('about')" class="btn-outline">Our Story</a></div>
+</div>
+<div class="hero-right fly-right d2">
+<img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=80" alt="Curated living space">
+</div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker"><div class="ticker-track">
+<span class="ticker-item"><span class="ticker-dot"></span>Free shipping over €200</span>
+<span class="ticker-item"><span class="ticker-dot"></span>Handpicked by our design team</span>
+<span class="ticker-item"><span class="ticker-dot"></span>Independent makers worldwide</span>
+<span class="ticker-item"><span class="ticker-dot"></span>30-day returns</span>
+<span class="ticker-item"><span class="ticker-dot"></span>Sustainably sourced</span>
+<span class="ticker-item"><span class="ticker-dot"></span>Free shipping over €200</span>
+<span class="ticker-item"><span class="ticker-dot"></span>Handpicked by our design team</span>
+<span class="ticker-item"><span class="ticker-dot"></span>Independent makers worldwide</span>
+<span class="ticker-item"><span class="ticker-dot"></span>30-day returns</span>
+<span class="ticker-item"><span class="ticker-dot"></span>Sustainably sourced</span>
+</div></div>
+
+<!-- CATEGORIES -->
+<section class="categories">
+<div class="s-label fly-left d1">Browse by Category</div>
+<div class="s-title">Find your style</div>
+<div class="cat-grid">
+<div class="cat-card"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80" alt="Furniture"><div class="cat-overlay"><div class="cat-name">Furniture</div><div class="cat-count">124 pieces</div></div></div>
+<div class="cat-card"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80" alt="Ceramics"><div class="cat-overlay"><div class="cat-name">Ceramics</div><div class="cat-count">86 pieces</div></div></div>
+<div class="cat-card"><img src="https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=600&q=80" alt="Lighting"><div class="cat-overlay"><div class="cat-name">Lighting</div><div class="cat-count">52 pieces</div></div></div>
+<div class="cat-card"><img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&q=80" alt="Textiles"><div class="cat-overlay"><div class="cat-name">Textiles & Art</div><div class="cat-count">198 pieces</div></div></div>
+</div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products">
+<div class="products-inner">
+<div class="products-header">
+<div><div class="s-label">New Arrivals</div><div class="s-title">Just landed</div></div>
+<div class="filter-row"><button class="filter-btn active" data-filter="all">All</button><button class="filter-btn" data-filter="furniture">Furniture</button><button class="filter-btn" data-filter="ceramics">Ceramics</button><button class="filter-btn" data-filter="lighting">Lighting</button></div>
+</div>
+<div class="product-grid">
+<div class="product-card" data-cat="furniture" data-product="arc-chair" onclick="showProduct('arc-chair')"><div class="product-img"><img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=500&q=80" alt="Lounge Chair"><div class="product-badge">New</div><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Studio Aura</div><div class="product-name">Arc Lounge Chair</div><div class="product-price">€1,240</div></div></div>
+
+<div class="product-card" data-cat="ceramics" data-product="vase-7" onclick="showProduct('vase-7')"><div class="product-img"><img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500&q=80" alt="Ceramic Vase"><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Atelier Terre</div><div class="product-name">Sculptural Vase No.7</div><div class="product-price">€185</div></div></div>
+
+<div class="product-card" data-cat="lighting" data-product="orb-pendant" onclick="showProduct('orb-pendant')"><div class="product-img"><img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=500&q=80" alt="Pendant Light"><div class="product-badge">Bestseller</div><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Lumen Works</div><div class="product-name">Orb Pendant Light</div><div class="product-price">€420</div></div></div>
+
+<div class="product-card" data-cat="ceramics" data-product="planter" onclick="showProduct('planter')"><div class="product-img"><img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=500&q=80" alt="Planter"><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Verde Studio</div><div class="product-name">Ribbed Planter</div><div class="product-price">€95</div></div></div>
+
+<div class="product-card" data-cat="furniture" data-product="wave-sofa" onclick="showProduct('wave-sofa')"><div class="product-img"><img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=500&q=80" alt="Sofa"><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Nōrd Design</div><div class="product-name">Wave Sofa</div><div class="product-price">€3,800 <span class="old">€4,200</span></div></div></div>
+
+<div class="product-card" data-cat="ceramics" data-product="tea-set" onclick="showProduct('tea-set')"><div class="product-img"><img src="https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=500&q=80" alt="Tea Set"><div class="product-badge">Limited</div><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Kintsugi Lab</div><div class="product-name">Tea Set — Gold Repair</div><div class="product-price">€340</div></div></div>
+
+<div class="product-card" data-cat="furniture" data-product="mirror" onclick="showProduct('mirror')"><div class="product-img"><img src="https://images.unsplash.com/photo-1618220179428-22790b461013?w=500&q=80" alt="Mirror"><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Reflect Co.</div><div class="product-name">Asymmetric Mirror</div><div class="product-price">€560</div></div></div>
+
+<div class="product-card" data-cat="lighting" data-product="candle-holder" onclick="showProduct('candle-holder')"><div class="product-img"><img src="https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=500&q=80" alt="Candle Holder"><button class="wishlist" onclick="event.stopPropagation()">♡</button></div><div class="product-info"><div class="product-brand">Cera Studio</div><div class="product-name">Column Candle Holder</div><div class="product-price">€78</div></div></div>
+</div>
+</div>
+</section>
+
+<!-- EDITORIAL -->
+<section class="editorial">
+<div class="editorial-img"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&q=80" alt="Interior styled room"></div>
+<div class="editorial-text">
+<div class="s-label">The Makers</div>
+<h2>Every object tells the story of the hands that made it</h2>
+<p>We visit every studio, meet every maker, and verify every material before a piece enters our collection. Quality isn't negotiable — it's the starting point.</p>
+<a href="#" class="editorial-link">Meet our makers →</a>
+</div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+<div class="feat-grid">
+<div class="feat-item"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><h3>Curated Selection</h3><p>Every piece hand-picked from studios worldwide</p></div>
+<div class="feat-item"><div class="feat-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h3>Free Shipping</h3><p>Complimentary on orders over €200</p></div>
+<div class="feat-item"><div class="feat-icon"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></div><h3>30-Day Returns</h3><p>Full refund, no questions asked</p></div>
+<div class="feat-item"><div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Secure Payment</h3><p>SSL encrypted, all cards accepted</p></div>
+</div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+<h2>Join the FORMA community</h2>
+<p>First access to new arrivals, studio visits, and design stories.</p>
+<div class="nl-form"><input type="email" placeholder="Your email address"><button>Subscribe</button></div>
+</section>
+
+<!-- end newsletter -->
+</div><!-- end page-shop -->
+
+<!-- COLLECTIONS PAGE -->
+<div id="page-collections" class="page">
+<section style="margin-top:72px;padding:80px 48px;max-width:1400px;margin-left:auto;margin-right:auto">
+<div class="s-label fly-down d1">Curated Collections</div>
+<h2 class="s-title" style="margin-bottom:16px" class="fly-up d2">Thoughtfully grouped, beautifully made</h2>
+<p style="font-size:15px;color:var(--muted);line-height:1.7;max-width:500px;margin-bottom:56px"><span class="fly-up d3" style="display:block">Each collection is a mood — a set of objects chosen to work together in a single space, telling a cohesive design story.</p>
+</section>
+<div style="padding:0 48px;max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px">
+<div onclick="showPage('col-living')" style="position:relative;overflow:hidden;border-radius:8px;aspect-ratio:4/3;cursor:pointer"><img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .6s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,22,.7),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:32px"><div style="font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:4px">The Living Room Edit</div><div style="font-size:12px;color:rgba(255,255,255,.7)">18 pieces · Warm neutrals</div></div></div>
+<div onclick="showPage('col-luxury')" style="position:relative;overflow:hidden;border-radius:8px;aspect-ratio:4/3;cursor:pointer" class="fly-right d3"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .6s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,22,.7),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:32px"><div style="font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:4px">Quiet Luxury</div><div style="font-size:12px;color:rgba(255,255,255,.7)">12 pieces · Understated elegance</div></div></div>
+</div>
+<div style="padding:0 48px;max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:80px">
+<div onclick="showPage('col-japandi')" style="position:relative;overflow:hidden;border-radius:8px;aspect-ratio:3/4;cursor:pointer"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .6s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,22,.7),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px"><div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:4px">Japandi</div><div style="font-size:11px;color:rgba(255,255,255,.7)">24 pieces</div></div></div>
+<div onclick="showPage('col-ceramic')" style="position:relative;overflow:hidden;border-radius:8px;aspect-ratio:3/4;cursor:pointer"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .6s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,22,.7),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px"><div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:4px">Ceramic Studio</div><div style="font-size:11px;color:rgba(255,255,255,.7)">16 pieces</div></div></div>
+<div onclick="showPage('col-texture')" style="position:relative;overflow:hidden;border-radius:8px;aspect-ratio:3/4;cursor:pointer"><img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .6s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,22,.7),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px"><div style="font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-bottom:4px">Texture & Tone</div><div style="font-size:11px;color:rgba(255,255,255,.7)">20 pieces</div></div></div>
+</div>
+</div>
+
+<!-- COLLECTION: LIVING ROOM EDIT -->
+<div id="page-col-living" class="page">
+<div style="margin-top:72px;height:60vh;position:relative;overflow:hidden">
+<img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1400&q=80" style="width:100%;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(244,241,236,.95))"></div>
+<div style="position:absolute;bottom:48px;left:80px;z-index:2">
+<div class="s-label fly-down d1">Collection</div>
+<div class="fly-left d2" style="font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,56px);font-weight:400;margin-bottom:8px">The Living Room Edit</div>
+<p class="fly-left d3" style="font-size:15px;color:var(--muted);max-width:400px">18 curated pieces in warm neutrals — designed to make any living space feel like a sanctuary.</p>
+</div>
+</div>
+<div style="padding:64px 48px;max-width:1400px;margin:0 auto">
+<a onclick="showPage('collections')" style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);cursor:pointer;margin-bottom:48px;display:inline-block">← Back to Collections</a>
+<div class="product-grid" style="margin-top:24px">
+<div class="product-card fly-up d1" onclick="showProduct('arc-chair')"><div class="product-img"><img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=500&q=80" alt="Chair"></div><div class="product-info"><div class="product-brand">Studio Aura</div><div class="product-name">Arc Lounge Chair</div><div class="product-price">€1,240</div></div></div>
+<div class="product-card fly-up d2" onclick="showProduct('wave-sofa')"><div class="product-img"><img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=500&q=80" alt="Sofa"></div><div class="product-info"><div class="product-brand">Nōrd Design</div><div class="product-name">Wave Sofa</div><div class="product-price">€3,800</div></div></div>
+<div class="product-card fly-up d3" onclick="showProduct('mirror')"><div class="product-img"><img src="https://images.unsplash.com/photo-1618220179428-22790b461013?w=500&q=80" alt="Mirror"></div><div class="product-info"><div class="product-brand">Reflect Co.</div><div class="product-name">Asymmetric Mirror</div><div class="product-price">€560</div></div></div>
+<div class="product-card fly-up d4" onclick="showProduct('candle-holder')"><div class="product-img"><img src="https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=500&q=80" alt="Candle"></div><div class="product-info"><div class="product-brand">Cera Studio</div><div class="product-name">Column Candle Holder</div><div class="product-price">€78</div></div></div>
+</div>
+</div>
+</div>
+
+<!-- COLLECTION: QUIET LUXURY -->
+<div id="page-col-luxury" class="page">
+<div style="margin-top:72px;height:60vh;position:relative;overflow:hidden">
+<img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1400&q=80" style="width:100%;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(244,241,236,.95))"></div>
+<div style="position:absolute;bottom:48px;left:80px;z-index:2">
+<div class="s-label fly-down d1">Collection</div>
+<div class="fly-left d2" style="font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,56px);font-weight:400;margin-bottom:8px">Quiet Luxury</div>
+<p class="fly-left d3" style="font-size:15px;color:var(--muted);max-width:400px">12 understated pieces that speak through material quality, not volume. For spaces that whisper.</p>
+</div>
+</div>
+<div style="padding:64px 48px;max-width:1400px;margin:0 auto">
+<a onclick="showPage('collections')" style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);cursor:pointer;margin-bottom:48px;display:inline-block">← Back to Collections</a>
+<div class="product-grid" style="margin-top:24px">
+<div class="product-card fly-up d1" onclick="showProduct('vase-7')"><div class="product-img"><img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500&q=80" alt="Vase"></div><div class="product-info"><div class="product-brand">Atelier Terre</div><div class="product-name">Sculptural Vase No.7</div><div class="product-price">€185</div></div></div>
+<div class="product-card fly-up d2" onclick="showProduct('tea-set')"><div class="product-img"><img src="https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=500&q=80" alt="Tea Set"></div><div class="product-info"><div class="product-brand">Kintsugi Lab</div><div class="product-name">Tea Set — Gold Repair</div><div class="product-price">€340</div></div></div>
+<div class="product-card fly-up d3" onclick="showProduct('orb-pendant')"><div class="product-img"><img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=500&q=80" alt="Pendant"></div><div class="product-info"><div class="product-brand">Lumen Works</div><div class="product-name">Orb Pendant Light</div><div class="product-price">€420</div></div></div>
+<div class="product-card fly-up d4" onclick="showProduct('arc-chair')"><div class="product-img"><img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=500&q=80" alt="Chair"></div><div class="product-info"><div class="product-brand">Studio Aura</div><div class="product-name">Arc Lounge Chair</div><div class="product-price">€1,240</div></div></div>
+</div>
+</div>
+</div>
+
+<!-- COLLECTION: JAPANDI -->
+<div id="page-col-japandi" class="page">
+<div style="margin-top:72px;height:60vh;position:relative;overflow:hidden">
+<img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1400&q=80" style="width:100%;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(244,241,236,.95))"></div>
+<div style="position:absolute;bottom:48px;left:80px;z-index:2">
+<div class="s-label fly-down d1">Collection</div>
+<div class="fly-left d2" style="font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,56px);font-weight:400;margin-bottom:8px">Japandi</div>
+<p class="fly-left d3" style="font-size:15px;color:var(--muted);max-width:400px">24 pieces blending Japanese minimalism with Scandinavian warmth. Clean lines, natural materials, quiet beauty.</p>
+</div>
+</div>
+<div style="padding:64px 48px;max-width:1400px;margin:0 auto">
+<a onclick="showPage('collections')" style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);cursor:pointer;margin-bottom:48px;display:inline-block">← Back to Collections</a>
+<div class="product-grid" style="margin-top:24px">
+<div class="product-card fly-up d1" onclick="showProduct('tea-set')"><div class="product-img"><img src="https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=500&q=80" alt="Tea"></div><div class="product-info"><div class="product-brand">Kintsugi Lab</div><div class="product-name">Tea Set — Gold Repair</div><div class="product-price">€340</div></div></div>
+<div class="product-card fly-up d2" onclick="showProduct('planter')"><div class="product-img"><img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=500&q=80" alt="Planter"></div><div class="product-info"><div class="product-brand">Verde Studio</div><div class="product-name">Ribbed Planter</div><div class="product-price">€95</div></div></div>
+<div class="product-card fly-up d3" onclick="showProduct('candle-holder')"><div class="product-img"><img src="https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=500&q=80" alt="Candle"></div><div class="product-info"><div class="product-brand">Cera Studio</div><div class="product-name">Column Candle Holder</div><div class="product-price">€78</div></div></div>
+<div class="product-card fly-up d4" onclick="showProduct('vase-7')"><div class="product-img"><img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500&q=80" alt="Vase"></div><div class="product-info"><div class="product-brand">Atelier Terre</div><div class="product-name">Sculptural Vase No.7</div><div class="product-price">€185</div></div></div>
+</div>
+</div>
+</div>
+
+<!-- COLLECTION: CERAMIC STUDIO -->
+<div id="page-col-ceramic" class="page">
+<div style="margin-top:72px;height:60vh;position:relative;overflow:hidden">
+<img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1400&q=80" style="width:100%;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(244,241,236,.95))"></div>
+<div style="position:absolute;bottom:48px;left:80px;z-index:2">
+<div class="s-label fly-down d1">Collection</div>
+<div class="fly-left d2" style="font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,56px);font-weight:400;margin-bottom:8px">Ceramic Studio</div>
+<p class="fly-left d3" style="font-size:15px;color:var(--muted);max-width:400px">16 handmade ceramic pieces from studios in Lisbon, Kyoto, and Athens. Each one unique, each one alive.</p>
+</div>
+</div>
+<div style="padding:64px 48px;max-width:1400px;margin:0 auto">
+<a onclick="showPage('collections')" style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);cursor:pointer;margin-bottom:48px;display:inline-block">← Back to Collections</a>
+<div class="product-grid" style="margin-top:24px">
+<div class="product-card fly-up d1" onclick="showProduct('vase-7')"><div class="product-img"><img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500&q=80" alt="Vase"></div><div class="product-info"><div class="product-brand">Atelier Terre</div><div class="product-name">Sculptural Vase No.7</div><div class="product-price">€185</div></div></div>
+<div class="product-card fly-up d2" onclick="showProduct('planter')"><div class="product-img"><img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=500&q=80" alt="Planter"></div><div class="product-info"><div class="product-brand">Verde Studio</div><div class="product-name">Ribbed Planter</div><div class="product-price">€95</div></div></div>
+<div class="product-card fly-up d3" onclick="showProduct('tea-set')"><div class="product-img"><img src="https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=500&q=80" alt="Tea"></div><div class="product-info"><div class="product-brand">Kintsugi Lab</div><div class="product-name">Tea Set — Gold Repair</div><div class="product-price">€340</div></div></div>
+<div class="product-card fly-up d4" onclick="showProduct('candle-holder')"><div class="product-img"><img src="https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=500&q=80" alt="Candle"></div><div class="product-info"><div class="product-brand">Cera Studio</div><div class="product-name">Column Candle Holder</div><div class="product-price">€78</div></div></div>
+</div>
+</div>
+</div>
+
+<!-- COLLECTION: TEXTURE & TONE -->
+<div id="page-col-texture" class="page">
+<div style="margin-top:72px;height:60vh;position:relative;overflow:hidden">
+<img src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=1400&q=80" style="width:100%;height:100%;object-fit:cover">
+<div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(244,241,236,.95))"></div>
+<div style="position:absolute;bottom:48px;left:80px;z-index:2">
+<div class="s-label fly-down d1">Collection</div>
+<div class="fly-left d2" style="font-family:'DM Serif Display',serif;font-size:clamp(36px,5vw,56px);font-weight:400;margin-bottom:8px">Texture & Tone</div>
+<p class="fly-left d3" style="font-size:15px;color:var(--muted);max-width:400px">20 pieces chosen for their tactile richness — woven, carved, glazed, and stitched. Objects you want to touch.</p>
+</div>
+</div>
+<div style="padding:64px 48px;max-width:1400px;margin:0 auto">
+<a onclick="showPage('collections')" style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);cursor:pointer;margin-bottom:48px;display:inline-block">← Back to Collections</a>
+<div class="product-grid" style="margin-top:24px">
+<div class="product-card fly-up d1" onclick="showProduct('wave-sofa')"><div class="product-img"><img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=500&q=80" alt="Sofa"></div><div class="product-info"><div class="product-brand">Nōrd Design</div><div class="product-name">Wave Sofa</div><div class="product-price">€3,800</div></div></div>
+<div class="product-card fly-up d2" onclick="showProduct('arc-chair')"><div class="product-img"><img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=500&q=80" alt="Chair"></div><div class="product-info"><div class="product-brand">Studio Aura</div><div class="product-name">Arc Lounge Chair</div><div class="product-price">€1,240</div></div></div>
+<div class="product-card fly-up d3" onclick="showProduct('orb-pendant')"><div class="product-img"><img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=500&q=80" alt="Pendant"></div><div class="product-info"><div class="product-brand">Lumen Works</div><div class="product-name">Orb Pendant Light</div><div class="product-price">€420</div></div></div>
+<div class="product-card fly-up d4" onclick="showProduct('mirror')"><div class="product-img"><img src="https://images.unsplash.com/photo-1618220179428-22790b461013?w=500&q=80" alt="Mirror"></div><div class="product-info"><div class="product-brand">Reflect Co.</div><div class="product-name">Asymmetric Mirror</div><div class="product-price">€560</div></div></div>
+</div>
+</div>
+</div>
+
+<!-- MAKERS PAGE -->
+<div id="page-makers" class="page">
+<section style="margin-top:72px;padding:80px 48px;max-width:1400px;margin-left:auto;margin-right:auto">
+<div class="s-label fly-down d1">Our Makers</div>
+<h2 class="s-title" style="margin-bottom:16px" class="fly-up d2">The hands behind every object</h2>
+<p style="font-size:15px;color:var(--muted);line-height:1.7;max-width:500px;margin-bottom:56px">We partner with independent studios and artisans worldwide. Every maker is vetted in person — their process, materials, and values must align with ours.</p>
+</section>
+<div style="padding:0 48px;max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-bottom:80px;align-items:start">
+<div style="cursor:pointer" class="fly-up d1"><div style="aspect-ratio:1;overflow:hidden;border-radius:50%;margin-bottom:20px"><img src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=500&q=80" style="width:100%;height:100%;object-fit:cover;filter:grayscale(.3);transition:all .5s" onmouseover="this.style.filter='grayscale(0)';this.style.transform='scale(1.05)'" onmouseout="this.style.filter='grayscale(.3)';this.style.transform='scale(1)'"></div><div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px">Studio Aura</div><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Copenhagen, Denmark</div><div style="font-size:11px;color:var(--accent);letter-spacing:1px;font-weight:600">FURNITURE</div></div></div>
+<div style="cursor:pointer;margin-top:48px" class="fly-up d3"><div style="aspect-ratio:1;overflow:hidden;border-radius:50%;margin-bottom:20px"><img src="https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=500&q=80" style="width:100%;height:100%;object-fit:cover;filter:grayscale(.3);transition:all .5s" onmouseover="this.style.filter='grayscale(0)';this.style.transform='scale(1.05)'" onmouseout="this.style.filter='grayscale(.3)';this.style.transform='scale(1)'"></div><div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px">Atelier Terre</div><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Lisbon, Portugal</div><div style="font-size:11px;color:var(--accent);letter-spacing:1px;font-weight:600">CERAMICS</div></div></div>
+<div style="cursor:pointer" class="fly-up d5"><div style="aspect-ratio:1;overflow:hidden;border-radius:50%;margin-bottom:20px"><img src="https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=500&q=80" style="width:100%;height:100%;object-fit:cover;filter:grayscale(.3);transition:all .5s" onmouseover="this.style.filter='grayscale(0)';this.style.transform='scale(1.05)'" onmouseout="this.style.filter='grayscale(.3)';this.style.transform='scale(1)'"></div><div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px">Kintsugi Lab</div><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Kyoto, Japan</div><div style="font-size:11px;color:var(--accent);letter-spacing:1px;font-weight:600">CERAMICS · GOLD</div></div></div>
+<div style="cursor:pointer;margin-top:-20px"><div style="aspect-ratio:1;overflow:hidden;border-radius:50%;margin-bottom:20px"><img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=500&q=80" style="width:100%;height:100%;object-fit:cover;filter:grayscale(.3);transition:all .5s" onmouseover="this.style.filter='grayscale(0)';this.style.transform='scale(1.05)'" onmouseout="this.style.filter='grayscale(.3)';this.style.transform='scale(1)'"></div><div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px">Lumen Works</div><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Milan, Italy</div><div style="font-size:11px;color:var(--accent);letter-spacing:1px;font-weight:600">LIGHTING</div></div></div>
+<div style="cursor:pointer;margin-top:24px"><div style="aspect-ratio:1;overflow:hidden;border-radius:50%;margin-bottom:20px"><img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=500&q=80" style="width:100%;height:100%;object-fit:cover;filter:grayscale(.3);transition:all .5s" onmouseover="this.style.filter='grayscale(0)';this.style.transform='scale(1.05)'" onmouseout="this.style.filter='grayscale(.3)';this.style.transform='scale(1)'"></div><div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px">Nōrd Design</div><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Stockholm, Sweden</div><div style="font-size:11px;color:var(--accent);letter-spacing:1px;font-weight:600">FURNITURE</div></div></div>
+<div style="cursor:pointer;margin-top:-20px"><div style="aspect-ratio:1;overflow:hidden;border-radius:50%;margin-bottom:20px"><img src="https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=500&q=80" style="width:100%;height:100%;object-fit:cover;filter:grayscale(.3);transition:all .5s" onmouseover="this.style.filter='grayscale(0)';this.style.transform='scale(1.05)'" onmouseout="this.style.filter='grayscale(.3)';this.style.transform='scale(1)'"></div><div style="text-align:center"><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px">Cera Studio</div><div style="font-size:12px;color:var(--muted);margin-bottom:4px">Athens, Greece</div><div style="font-size:11px;color:var(--accent);letter-spacing:1px;font-weight:600">CERAMICS</div></div></div>
+</div>
+</div>
+
+<!-- JOURNAL PAGE -->
+<div id="page-journal" class="page">
+<section style="margin-top:72px;padding:80px 48px;max-width:1400px;margin-left:auto;margin-right:auto">
+<div class="s-label fly-down d1">Journal</div>
+<h2 class="s-title" style="margin-bottom:56px">Stories, ideas, and studio visits</h2>
+</section>
+<div style="padding:0 48px;max-width:1400px;margin:0 auto">
+<div style="display:grid;grid-template-columns:1.5fr 1fr;gap:24px;margin-bottom:48px">
+<div style="position:relative;overflow:hidden;border-radius:8px;cursor:pointer"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&q=80" style="width:100%;height:100%;object-fit:cover;aspect-ratio:16/9;transition:transform .6s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"><div style="position:absolute;bottom:0;left:0;right:0;padding:32px;background:linear-gradient(to top,rgba(26,24,22,.8),transparent)"><div style="font-size:10px;letter-spacing:3px;color:var(--accent-light);margin-bottom:8px;font-weight:600">STUDIO VISIT</div><div style="font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:6px">Inside Studio Aura's Copenhagen Workshop</div><div style="font-size:12px;color:rgba(255,255,255,.6)">March 15, 2026 · 8 min read</div></div></div>
+<div style="display:flex;flex-direction:column;gap:24px">
+<div style="border-bottom:1px solid var(--border);padding-bottom:24px;cursor:pointer"><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:8px;font-weight:600">DESIGN ESSAY</div><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:6px">Why imperfection is the new luxury</div><div style="font-size:12px;color:var(--muted)">March 8, 2026 · 5 min read</div></div>
+<div style="border-bottom:1px solid var(--border);padding-bottom:24px;cursor:pointer"><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:8px;font-weight:600">MATERIAL GUIDE</div><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:6px">Understanding Japanese ceramics: a beginner's guide</div><div style="font-size:12px;color:var(--muted)">February 22, 2026 · 12 min read</div></div>
+<div style="border-bottom:1px solid var(--border);padding-bottom:24px;cursor:pointer"><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:8px;font-weight:600">INTERIOR</div><div style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:6px">5 rules for mixing old and new furniture</div><div style="font-size:12px;color:var(--muted)">February 10, 2026 · 6 min read</div></div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:80px">
+<div style="cursor:pointer"><div style="overflow:hidden;border-radius:8px;margin-bottom:16px;aspect-ratio:4/3"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .5s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:6px;font-weight:600">TREND</div><div style="font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:4px">The return of craft furniture</div><div style="font-size:12px;color:var(--muted)">January 28, 2026</div></div>
+<div style="cursor:pointer"><div style="overflow:hidden;border-radius:8px;margin-bottom:16px;aspect-ratio:4/3"><img src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=500&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .5s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:6px;font-weight:600">PROCESS</div><div style="font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:4px">How steam-bending shapes wood</div><div style="font-size:12px;color:var(--muted)">January 15, 2026</div></div>
+<div style="cursor:pointer"><div style="overflow:hidden;border-radius:8px;margin-bottom:16px;aspect-ratio:4/3"><img src="https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=500&q=80" style="width:100%;height:100%;object-fit:cover;transition:transform .5s" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'"></div><div style="font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:6px;font-weight:600">LIGHTING</div><div style="font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:4px">Living with natural light</div><div style="font-size:12px;color:var(--muted)">January 5, 2026</div></div>
+</div>
+</div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="page-about" class="page">
+<div style="margin-top:72px;display:grid;grid-template-columns:1fr 1fr;min-height:80vh">
+<div style="padding:80px 64px;display:flex;flex-direction:column;justify-content:center;background:var(--warm)">
+<div class="s-label fly-left d1">Our Story</div>
+<h2 style="font-family:'DM Serif Display',serif;font-size:clamp(32px,4vw,48px);font-weight:400;margin-bottom:20px;line-height:1.15" class="fly-left d2">We believe in objects that earn their place in your home</h2>
+<p style="font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:16px" class="fly-left d3">FORMA was founded in 2021 with a simple conviction: the objects we live with should be made with integrity, designed with purpose, and built to last.</p>
+<p style="font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:16px" class="fly-left d4">We travel to studios across Europe, Japan, and the Americas — meeting makers, understanding processes, and selecting only pieces that meet our standards for craft, material, and design.</p>
+<p style="font-size:15px;color:var(--muted);line-height:1.8" class="fly-left d5">Every object in our collection has been held, tested, and approved by our team before it reaches yours.</p>
+</div>
+<div style="overflow:hidden" class="fly-right d2"><img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80" style="width:100%;height:100%;object-fit:cover"></div>
+</div>
+<div style="padding:80px 48px;max-width:1400px;margin:0 auto">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:48px;text-align:center;margin-bottom:80px">
+<div class="fly-up d2"><div style="font-family:'DM Serif Display',serif;font-size:48px;color:var(--accent);margin-bottom:8px">460+</div><div style="font-size:14px;color:var(--muted)">Curated objects</div></div>
+<div class="fly-up d3"><div style="font-family:'DM Serif Display',serif;font-size:48px;color:var(--accent);margin-bottom:8px">38</div><div style="font-size:14px;color:var(--muted)">Partner studios</div></div>
+<div class="fly-up d4"><div style="font-family:'DM Serif Display',serif;font-size:48px;color:var(--accent);margin-bottom:8px">12</div><div style="font-size:14px;color:var(--muted)">Countries</div></div>
+</div>
+<div style="text-align:center;max-width:600px;margin:0 auto">
+<div class="s-label fly-up d1" style="justify-content:center;display:flex">Values</div>
+<h3 style="font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;margin-bottom:32px" class="fly-up d2">What guides us</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;text-align:left">
+<div class="fly-left d2"><h4 style="font-size:14px;font-weight:600;margin-bottom:6px">Craft over mass</h4><p style="font-size:13px;color:var(--muted);line-height:1.7">We choose makers who work with their hands, not assembly lines.</p></div>
+<div class="fly-right d2"><h4 style="font-size:14px;font-weight:600;margin-bottom:6px">Material integrity</h4><p style="font-size:13px;color:var(--muted);line-height:1.7">Real wood, real stone, real ceramic. No imitations.</p></div>
+<div class="fly-left d3"><h4 style="font-size:14px;font-weight:600;margin-bottom:6px">Timeless design</h4><p style="font-size:13px;color:var(--muted);line-height:1.7">We select pieces that won't feel dated in 5, 10, or 20 years.</p></div>
+<div class="fly-right d3"><h4 style="font-size:14px;font-weight:600;margin-bottom:6px">Sustainability</h4><p style="font-size:13px;color:var(--muted);line-height:1.7">Responsibly sourced materials. Zero-waste packaging.</p></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer-grid">
+<div>
+<div class="footer-logo"><div class="footer-logo-mark">F</div><div class="footer-logo-text">FORMA</div></div>
+<p class="footer-desc">Curated home objects from independent makers worldwide. Beautiful living, thoughtfully sourced.</p>
+</div>
+<div class="ft-col"><h4>Shop</h4><a href="#">New Arrivals</a><a href="#">Collections</a><a href="#">Makers</a><a href="#">Sale</a></div>
+<div class="ft-col"><h4>About</h4><a href="#">Our Story</a><a href="#">Journal</a><a href="#">Sustainability</a><a href="#">Press</a></div>
+<div class="ft-col"><h4>Help</h4><a href="#">Shipping</a><a href="#">Returns</a><a href="#">Contact</a><a href="#">FAQ</a></div>
+</div>
+<div class="footer-bottom"><span>&copy; 2026 FORMA. All rights reserved.</span><span>Made with care</span></div>
+</footer>
+
+<script>
+// Page navigation
+function showPage(p){
+document.querySelectorAll('.page').forEach(x=>{
+x.classList.remove('active');
+x.querySelectorAll('.shown').forEach(el=>el.classList.remove('shown'));
+});
+const page=document.getElementById('page-'+p);
+page.classList.add('active');
+document.querySelectorAll('.nav-links a').forEach(a=>{a.classList.remove('active');if(a.dataset.page===p)a.classList.add('active')});
+window.scrollTo({top:0});
+// Stagger fly-in elements after page is visible
+setTimeout(()=>{
+const flyEls=page.querySelectorAll('[class*="fly-"]');
+flyEls.forEach((el,i)=>{
+const d=el.classList.contains('d1')?150:el.classList.contains('d2')?300:el.classList.contains('d3')?450:el.classList.contains('d4')?600:el.classList.contains('d5')?750:i*120;
+setTimeout(()=>el.classList.add('shown'),d);
+});
+},100);
+// Apply scroll reveal for below-fold content
+setTimeout(()=>{applyReveal(page)},200);
+}
+function applyReveal(container){
+const sels='[style*="border-radius:8px"],[style*="border-radius:50%"],[style*="border-bottom:1px"],[style*="overflow:hidden;border-radius"],h2,h3,.s-label,.s-title,.feat-item,.editorial,.newsletter';
+container.querySelectorAll(sels).forEach((el,i)=>{
+if(el.closest('.pdp-overlay')||el.closest('nav'))return;
+if(!el.dataset.rv){
+el.style.opacity='0';
+const dir=i%3===0?'translateY(28px)':i%3===1?'translateX(-20px)':'translateX(20px)';
+el.style.transform=dir;
+el.style.transition='all 1s cubic-bezier(.23,1,.32,1)';
+el.dataset.rv='1';
+const delay=Math.min(i,6)*100;
+setTimeout(()=>{obs.observe(el)},delay);
+}
+});
+}
+
+// Product data
+const products={
+'arc-chair':{brand:'Studio Aura',name:'Arc Lounge Chair',price:'€1,240',hero:'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1400&q=80',side:'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=700&q=80',parallax:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1400&q=80',desc:'The Arc Lounge Chair is where minimalism meets deep comfort. Its curved silhouette cradles the body while maintaining a visual lightness that lets it breathe in any space. Made by hand in a small studio in Copenhagen.',desc2:'Each chair takes three weeks to produce. The frame is solid ash, steam-bent into its signature arc. The cushion is high-resilience foam wrapped in down.',specs:[['Dimensions','W 78 × D 82 × H 74 cm'],['Frame','Solid ash, steam-bent'],['Upholstery','Bouclé (100% wool)'],['Weight','14.5 kg'],['Lead Time','3–4 weeks'],['Origin','Copenhagen, Denmark']],details:[{img:'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=700&q=80',label:'Material',title:'Solid ash, steam-bent by hand',text:'Each frame begins as a single piece of sustainably harvested ash, steamed for six hours, then carefully bent into the signature arc curve.'},{img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&q=80',label:'Comfort',title:'High-resilience foam wrapped in down',text:'The cushion combines support of high-density foam with softness of natural down wrap. The bouclé wool develops a gentle patina over time.'},{img:'https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=700&q=80',label:'Process',title:'Three weeks, one pair of hands',text:'From raw timber to finished chair, each Arc is made by a single craftsperson. No assembly lines, no shortcuts.'}]},
+'vase-7':{brand:'Atelier Terre',name:'Sculptural Vase No.7',price:'€185',hero:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=1400&q=80',side:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=700&q=80',parallax:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1400&q=80',desc:'Hand-thrown and sculpted in our Lisbon studio, each Vase No.7 is a one-of-a-kind piece. The organic form is inspired by coastal erosion patterns, with a matte glaze that shifts in different light.',desc2:'Made from local Portuguese stoneware clay, fired at 1280°C for maximum durability. Food-safe and waterproof.',specs:[['Dimensions','H 32 × Ø 18 cm'],['Material','Portuguese stoneware'],['Glaze','Matte mineral'],['Weight','1.8 kg'],['Each piece','Unique'],['Origin','Lisbon, Portugal']],details:[{img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=700&q=80',label:'Material',title:'Portuguese stoneware clay',text:'Sourced from local quarries near Lisbon. The clay body fires to a warm grey tone with subtle natural variations in each piece.'},{img:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=700&q=80',label:'Form',title:'Inspired by coastal erosion',text:'The undulating walls reference the sea-carved cliffs of the Algarve coast. Each vase is hand-sculpted, making every piece unique.'},{img:'https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=700&q=80',label:'Glaze',title:'Mineral matte finish',text:'A custom glaze recipe using local minerals creates a surface that shifts between warm grey and soft blue depending on the light.'}]},
+'orb-pendant':{brand:'Lumen Works',name:'Orb Pendant Light',price:'€420',hero:'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=1400&q=80',side:'https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=700&q=80',parallax:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1400&q=80',desc:'The Orb Pendant casts a warm, diffused glow through its hand-blown glass shade. Suspended from a minimal brass fitting, it brings sculptural presence to any space.',desc2:'Compatible with standard E27 bulbs. Includes 2m adjustable cord and ceiling plate. Dimmable with compatible bulbs.',specs:[['Dimensions','Ø 30 × H 28 cm'],['Shade','Hand-blown glass'],['Fitting','Solid brass'],['Cord','2m adjustable, fabric'],['Bulb','E27 (not included)'],['Origin','Milan, Italy']],details:[{img:'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=700&q=80',label:'Glass',title:'Hand-blown in Murano',text:'Each shade is individually mouth-blown by master glassmakers, creating subtle variations in thickness that produce a beautiful uneven glow.'},{img:'https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=700&q=80',label:'Light',title:'Warm, diffused ambiance',text:'The frosted interior surface diffuses light evenly, eliminating harsh shadows while maintaining enough transparency to see the bulb silhouette.'},{img:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=700&q=80',label:'Detail',title:'Solid brass fitting',text:'The minimal canopy and socket are machined from solid brass, developing a rich patina over time. No plastic components.'}]},
+'planter':{brand:'Verde Studio',name:'Ribbed Planter',price:'€95',hero:'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=1400&q=80',side:'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=700&q=80',parallax:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1400&q=80',desc:'A modern planter with organic ribbed texture, designed to bring the outdoors in. The drainage system keeps plants healthy while protecting surfaces.',desc2:'Suitable for indoor use. Includes removable drainage tray. Available in natural and charcoal finishes.',specs:[['Dimensions','Ø 22 × H 20 cm'],['Material','Concrete composite'],['Finish','Natural / Charcoal'],['Weight','2.4 kg'],['Drainage','Built-in with tray'],['Origin','Brooklyn, USA']],details:[{img:'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=700&q=80',label:'Texture',title:'Hand-cast ribbed surface',text:'Each planter is cast in a custom silicone mold, creating the signature ribbed pattern. Minor variations make each piece unique.'},{img:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=80',label:'Function',title:'Built-in drainage system',text:'A hidden drainage layer and removable tray keep roots healthy without water stains on your furniture.'},{img:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=700&q=80',label:'Material',title:'Lightweight concrete composite',text:'A proprietary blend that looks and feels like concrete but weighs 60% less. Frost-resistant for outdoor use.'}]},
+'wave-sofa':{brand:'Nōrd Design',name:'Wave Sofa',price:'€3,800',hero:'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=1400&q=80',side:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&q=80',parallax:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1400&q=80',desc:'The Wave Sofa redefines what a sofa can be — sculptural enough to anchor a room, comfortable enough to fall asleep on. Its flowing lines were inspired by Nordic coastal landscapes.',desc2:'Modular design allows for L-shape or straight configurations. All cushion covers are removable and dry-cleanable.',specs:[['Dimensions','W 240 × D 95 × H 72 cm'],['Frame','Solid beech, reinforced'],['Cushions','Multi-layer foam + feather'],['Cover','Performance linen blend'],['Configuration','Modular (2-5 seats)'],['Origin','Stockholm, Sweden']],details:[{img:'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=80',label:'Design',title:'Inspired by Nordic coastlines',text:'The flowing silhouette references the rolling dunes and soft contours of the Scandinavian shore.'},{img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=700&q=80',label:'Comfort',title:'Multi-layer cushion system',text:'High-resilience foam base, soft foam middle, and feather-down topper create a sink-in comfort that retains its shape.'},{img:'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=700&q=80',label:'Build',title:'Solid beech frame, built to last',text:'Kiln-dried beech wood frame with reinforced joints. Designed for 20+ years of daily use.'}]},
+'tea-set':{brand:'Kintsugi Lab',name:'Tea Set — Gold Repair',price:'€340',hero:'https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=1400&q=80',side:'https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=700&q=80',parallax:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1400&q=80',desc:'Inspired by the Japanese art of kintsugi, this tea set celebrates imperfection. Gold-traced seams highlight the beauty of repair, making each set a meditation on resilience.',desc2:'Includes teapot, two cups, and a serving tray. Microwave safe (excluding gold elements). Hand wash recommended.',specs:[['Set includes','Teapot + 2 cups + tray'],['Material','Porcelain with 24K gold'],['Teapot capacity','450ml'],['Cup capacity','180ml'],['Care','Hand wash'],['Origin','Kyoto, Japan']],details:[{img:'https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?w=700&q=80',label:'Craft',title:'24-karat gold lacquer repair',text:'Real gold is applied by hand using traditional urushi lacquer techniques passed down through generations of Japanese artisans.'},{img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=700&q=80',label:'Philosophy',title:'Beauty in imperfection',text:'Each piece is intentionally fractured and repaired, embodying the wabi-sabi principle that broken things are more beautiful for having been broken.'},{img:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=700&q=80',label:'Material',title:'Fine Kyoto porcelain',text:'Thin-walled porcelain thrown on traditional kick wheels. The translucent body glows when held to light.'}]},
+'mirror':{brand:'Reflect Co.',name:'Asymmetric Mirror',price:'€560',hero:'https://images.unsplash.com/photo-1618220179428-22790b461013?w=1400&q=80',side:'https://images.unsplash.com/photo-1618220179428-22790b461013?w=700&q=80',parallax:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1400&q=80',desc:'An organic, free-form mirror that transforms walls into art. The asymmetric silhouette catches light differently throughout the day, creating ever-changing reflections.',desc2:'Includes wall-mounting hardware for both drywall and masonry. Can be hung vertically or horizontally.',specs:[['Dimensions','W 60 × H 90 cm'],['Glass','6mm beveled edge'],['Frame','Powder-coated steel'],['Weight','8.2 kg'],['Mounting','Wall hardware included'],['Origin','Berlin, Germany']],details:[{img:'https://images.unsplash.com/photo-1618220179428-22790b461013?w=700&q=80',label:'Form',title:'Organic, free-form silhouette',text:'The shape was developed through a process of hand-drawing and digital refinement, achieving a form that feels natural yet intentional.'},{img:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=700&q=80',label:'Light',title:'Plays with natural light',text:'The irregular edges catch sunlight at varying angles, casting soft highlights across the wall throughout the day.'},{img:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=80',label:'Quality',title:'Beveled edge, distortion-free',text:'6mm float glass with a precision-cut bevel. Copper-free backing for long-term clarity without black spots.'}]},
+'candle-holder':{brand:'Cera Studio',name:'Column Candle Holder',price:'€78',hero:'https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=1400&q=80',side:'https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=700&q=80',parallax:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1400&q=80',desc:'An architectural candle holder that elevates the simplest taper candle into a sculptural statement. The column form references classical architecture while the material keeps it firmly modern.',desc2:'Fits standard 2.2cm taper candles. Protective felt base included. Wax drips can be removed with warm water.',specs:[['Dimensions','Ø 8 × H 24 cm'],['Material','Cast concrete'],['Finish','Smooth, sealed'],['Candle size','Standard taper (2.2cm)'],['Weight','1.2 kg'],['Origin','Athens, Greece']],details:[{img:'https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=700&q=80',label:'Form',title:'Classical column, modern material',text:'The fluted column shape is a direct reference to ancient Greek architecture, reinterpreted in raw concrete for contemporary spaces.'},{img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=700&q=80',label:'Surface',title:'Sealed for everyday use',text:'A food-grade sealant protects the concrete from stains and makes wax removal effortless. Simply rinse with warm water.'},{img:'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=700&q=80',label:'Craft',title:'Hand-cast in small batches',text:'Each holder is individually cast and hand-finished in our Athens studio. Natural variations in color and texture make every piece unique.'}]}
+};
+
+// Show product detail page
+function showProduct(id){
+const p=products[id];if(!p)return;
+const pdp=document.getElementById('pdp-overlay');
+document.getElementById('pdp-hero-img').src=p.hero;
+document.getElementById('pdp-brand').textContent=p.brand;
+document.getElementById('pdp-name').innerHTML=p.name.replace(' ',`<br>`);
+document.getElementById('pdp-price').textContent=p.price;
+document.getElementById('pdp-desc').textContent=p.desc;
+document.getElementById('pdp-desc2').textContent=p.desc2;
+document.getElementById('pdp-side-img').src=p.side;
+document.getElementById('pdp-btn-price').textContent='Add to Cart — '+p.price;
+document.getElementById('pdp-parallax-img').src=p.parallax;
+// Specs
+let specHtml='';p.specs.forEach(s=>{specHtml+=`<div class="spec-row"><span class="spec-label">${s[0]}</span><span class="spec-value">${s[1]}</span></div>`;});
+document.getElementById('pdp-specs-list').innerHTML=specHtml;
+// Details
+const detailsEl=document.getElementById('pdp-details-list');
+let dHtml='';p.details.forEach((d,i)=>{
+const rev=i%2===1?'reverse':'';
+dHtml+=`<div class="detail-row ${rev}"><div class="detail-img"><img src="${d.img}" alt="${d.label}"></div><div class="detail-text"><h3>${d.label}</h3><h4>${d.title}</h4><p>${d.text}</p></div></div>`;
+});
+detailsEl.innerHTML=dHtml;
+pdp.style.display='block';
+requestAnimationFrame(()=>{pdp.classList.add('active');});
+document.body.style.overflow='hidden';
+window._pdpScroll=window.scrollY;
+pdp.scrollTop=0;
+}
+function closeProduct(){
+const pdp=document.getElementById('pdp-overlay');
+pdp.classList.remove('active');
+setTimeout(()=>{pdp.style.display='none';document.body.style.overflow='';},400);
+}
+
+// Filter
+document.querySelectorAll('.filter-btn').forEach(b=>{b.addEventListener('click',()=>{
+document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+b.classList.add('active');
+const filter=b.dataset.filter;
+document.querySelectorAll('.product-card').forEach(card=>{
+if(filter==='all'||card.dataset.cat===filter){card.classList.remove('hidden');card.style.opacity='0';card.style.transform='translateY(16px)';setTimeout(()=>{card.style.opacity='1';card.style.transform='translateY(0)'},50)}
+else{card.classList.add('hidden')}
+});
+});});
+
+// Scroll reveal - smooth & slow
+const obs=new IntersectionObserver(entries=>{
+entries.forEach((n,i)=>{if(n.isIntersecting){
+const delay=n.target.dataset.sd||0;
+setTimeout(()=>{n.target.style.opacity='1';n.target.style.transform='translate(0,0) scale(1)'},delay*1);
+obs.unobserve(n.target);
+}})},{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+
+// Apply to all content elements with varied directions
+document.querySelectorAll('.product-card,.cat-card,.feat-item,.s-label,.s-title,.hero-tag,.editorial,.newsletter,.editorial-link').forEach((el,i)=>{
+el.style.opacity='0';
+el.style.transform='translateY(30px)';
+el.style.transition='all 1s cubic-bezier(.23,1,.32,1)';
+el.dataset.sd=Math.min(i%4,3)*100;
+obs.observe(el);
+});
+
+// Product cards get staggered + slight horizontal offset
+document.querySelectorAll('.product-card').forEach((el,i)=>{
+const dir=i%2===0?-15:15;
+el.style.transform='translate('+dir+'px,30px)';
+el.style.transition='all 1.1s cubic-bezier(.23,1,.32,1)';
+el.dataset.sd=i%4*120;
+});
+
+// Cat cards get scale effect
+document.querySelectorAll('.cat-card').forEach((el,i)=>{
+el.style.transform='translateY(20px) scale(.97)';
+el.style.transition='all 1.2s cubic-bezier(.23,1,.32,1)';
+el.dataset.sd=i*150;
+});
+
+// Feature items fly from different directions
+document.querySelectorAll('.feat-item').forEach((el,i)=>{
+el.style.transform='translateY(25px)';
+el.style.transition='all 1s cubic-bezier(.23,1,.32,1)';
+el.dataset.sd=i*120;
+});
+
+// Trigger initial shop page fly-ins on load
+window.addEventListener('load',()=>{
+const shop=document.getElementById('page-shop');
+const flyEls=shop.querySelectorAll('[class*="fly-"]');
+flyEls.forEach((el,i)=>{
+const d=el.classList.contains('d1')?150:el.classList.contains('d2')?300:el.classList.contains('d3')?450:el.classList.contains('d4')?600:el.classList.contains('d5')?750:i*120;
+setTimeout(()=>el.classList.add('shown'),d+200);
+});
+});
+</script>
+<!-- PRODUCT DETAIL OVERLAY -->
+<div id="pdp-overlay" class="pdp-overlay">
+<div class="pdp-close" onclick="closeProduct()">
+<span class="pdp-close-text">← Back to Shop</span>
+</div>
+<div class="pdp-hero-full"><img id="pdp-hero-img" src="" alt="Product"><div class="pdp-hero-overlay"></div><div class="pdp-hero-content"><div id="pdp-brand" class="pdp-hero-brand"></div><div id="pdp-name" class="pdp-hero-title"></div><div id="pdp-price" class="pdp-hero-price"></div></div></div>
+<div class="pdp-info-section">
+<div class="pdp-text-col"><h2 id="pdp-desc" class="pdp-main-desc"></h2><p id="pdp-desc2" class="pdp-sub-desc"></p>
+<div class="pdp-specs-wrap"><h3>Specifications</h3><div id="pdp-specs-list"></div></div>
+<div class="pdp-actions"><button id="pdp-btn-price" class="btn-add"></button><button class="btn-wish">♡</button></div>
+</div>
+<div class="pdp-img-col"><img id="pdp-side-img" src="" alt="Side view"></div>
+</div>
+<div class="pdp-parallax-section"><img id="pdp-parallax-img" src="" alt="Context"><div class="pdp-par-overlay"></div><div class="pdp-par-text"><h3>Designed to last a lifetime</h3><p>Sustainably sourced materials. Expert craftsmanship. Built for decades, not seasons.</p></div></div>
+<div class="pdp-details-section"><h2>Crafted with intention</h2><div id="pdp-details-list"></div></div>
+</div>
+
+</body>
+</html>
